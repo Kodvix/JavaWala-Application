@@ -1,7 +1,7 @@
 import React from "react";
 import mern from "../assets/mern.png";
 import datascienceimg from "../assets/datascienceimg.png";
- import fullstack from "../assets/fullstack.png"; // Optional: Add this image
+ import fullstack from "../assets/Fullstack.png"; // Optional: Add this image
 import java from "../assets/java.jpg";
 
 export const courses = [
