@@ -18,7 +18,7 @@ export default function ContactUs() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("https://formspree.io/f/xkgzpkgy", {
+            const response = await fetch("https://formspree.io/f/xyzpvkon", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export default function ContactUs() {
                         <div className="space-y-4 text-sm">
                             <div className="flex items-center gap-2">
                                 <FaEnvelope className="text-blue-500" />
-                                <span>hello@javawala.com</span>
+                                <span>Info@javawala.com</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <FaPhoneAlt className="text-blue-500" />

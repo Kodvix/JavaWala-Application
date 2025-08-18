@@ -3,184 +3,10 @@ import mern from "../assets/mern.png";
 import datascienceimg from "../assets/datascienceimg.png";
  import fullstack from "../assets/Fullstack.png"; // Optional: Add this image
 import java from "../assets/java.jpg";
+import python from "../assets/python.png";
+import javabackend from "../assets/java.png";
 
 export const courses = [
-    {
-        id: "mern",
-        title: "MERN Stack Development",
-        duration: "6 Months",
-        batch: "Running",
-        price: "₹35,500",
-        oldPrice: "₹45,000",
-        description:
-            "Master MongoDB, Express.js, React, and Node.js. Build full-stack web apps from scratch and get placement support.",
-        rating: 4.8,
-        students: 700,
-        highlights: [
-            "Available Online and Offline",
-            "Certified Course",
-            "1-on-1 Doubt Sessions",
-            "Placement Assistance",
-        ],
-        curriculum: [
-            {
-                section: "Introduction to Web Development",
-                topics: ["HTML", "CSS", "JavaScript Basics", "Version Control (Git)"],
-            },
-            {
-                section: "JavaScript & Web Fundamentals",
-                topics: ["Basics of JavaScript", " Functions", "Arrays and Objects", "String and Array Methods", "Template Literals", "DOM Manipulation", "Event Handling", " Functions & Scope", "Higher-Order Functions","Debouncing and Throttling",
-                    "Arrow functions", "Promises and Async/Await", "Error Handling", "JSON Parsing", "Local Storage and Session Storage", "AJAX and Fetch API", "Introduction to ES6+ Features", "Classes & Inheritance ", "Optional Chaining","Nullish Coalescing",
-                    "Array/Object methods ","Advance Javascript","promises", "Async/Await", "Error Handling", "JSON Parsing", "Local Storage and Session Storage", "AJAX and Fetch API", "Introduction to ES6+ Features", "Classes & Inheritance ", "Optional Chaining","Nullish Coalescing",
-                ], 
-            },
-            {
-                section: "React.js Development",
-                topics: ["What is React and why use it?", "Setting up project with Create React App (CRA) or Vite", "Components", "Props and Prop Drilling", "Hooks", "Event Handling in React", "Conditional Rendering", "Forms", "Routing", "State Management", "Component Design", " Performance Optimization","React Query / TanStack Query"],
-            },
-            {
-                section: "Node.js & Express.js Backend",
-                topics: [
-                    "Node.js fundamentals",
-                    "Express.js APIs",
-                    "Authentication and Authorization",
-                    "Connecting Backend to Frontend",
-                ],
-            },
-            {
-                section: "MongoDB & Database Management",
-                topics: ["CRUD Operations", "Schema Design", "Mongoose ODM"],
-            },
-        ],
-        image: mern,
-    },
-    {
-        id: "datascience",
-        title: "Data Science & AI",
-        duration: "6 Months",
-        batch: "Upcoming",
-        price: "₹45,000",
-        oldPrice: "₹55,000",
-        description:
-            "Learn Machine Learning, Data Analysis, and AI techniques to solve real-world problems.",
-        rating: 4.9,
-        students: 500,
-        highlights: ["Live Projects", "Python & ML", "Placement Support"],
-        curriculum: [
-            {
-                section: "Python Programming Fundamentals",
-                topics: [
-                    "Variables & Data Types",
-                    "Control Flow (if, else, loops)",
-                    "Functions & Modules",
-                    "File Handling",
-                    "Object-Oriented Programming (OOP)",
-                    "Exception Handling",
-                    "Python Libraries Overview"
-                ],
-            },
-            {
-                section: "Python for Data Science",
-                topics: [
-                    "NumPy - Arrays, Broadcasting, Vectorization",
-                    "Pandas - DataFrames, Series, Data Cleaning",
-                    "Matplotlib & Seaborn - Visualization",
-                    "Data Wrangling & Preprocessing",
-                    "Exploratory Data Analysis (EDA)"
-                ],
-            },
-            {
-                section: "Statistics & Probability",
-                topics: [
-                    "Descriptive Statistics",
-                    "Probability Theory & Distributions",
-                    "Inferential Statistics",
-                    "Hypothesis Testing",
-                    "Correlation & Covariance"
-                ],
-            },
-            {
-                section: "SQL for Data Science",
-                topics: [
-                    "SQL Basics",
-                    "Joins & Subqueries",
-                    "Aggregations & Window Functions",
-                    "Data Manipulation with SQL"
-                ],
-            },
-            {
-                section: "Machine Learning",
-                topics: [
-                    "Supervised Learning (Regression, Classification)",
-                    "Unsupervised Learning (Clustering, PCA)",
-                    "Model Selection & Evaluation",
-                    "Bias-Variance Tradeoff",
-                    "Overfitting & Regularization",
-                    "Scikit-learn Pipelines"
-                ],
-            },
-            {
-                section: "Advanced Machine Learning",
-                topics: [
-                    "Ensemble Methods (Random Forest, XGBoost)",
-                    "Feature Engineering",
-                    "Hyperparameter Tuning (GridSearch, RandomSearch)",
-                    "Model Interpretability (SHAP, LIME)"
-                ],
-            },
-            {
-                section: "Deep Learning & Neural Networks",
-                topics: [
-                    "Introduction to Neural Networks",
-                    "TensorFlow/Keras Basics",
-                    "CNNs for Image Processing",
-                    "RNNs & LSTM for Time Series/Text",
-                    "Transfer Learning",
-                    "Model Optimization"
-                ],
-            },
-            {
-                section: "Natural Language Processing (NLP)",
-                topics: [
-                    "Text Cleaning & Preprocessing",
-                    "TF-IDF & Word Embeddings",
-                    "Sentiment Analysis",
-                    "Text Classification",
-                    "NLP with Transformers"
-                ],
-            },
-            {
-                section: "Projects & Real-world Case Studies",
-                topics: [
-                    "House Price Prediction",
-                    "Customer Segmentation",
-                    "Sentiment Analysis on Tweets",
-                    "Image Classification",
-                    "Loan Default Prediction"
-                ],
-            },
-            {
-                section: "Deployment & MLOps Basics",
-                topics: [
-                    "Model Deployment with Flask",
-                    "Using Streamlit for ML Apps",
-                    "Introduction to Docker",
-                    "Version Control (Git & GitHub)",
-                    "Cloud Deployment (Render, Heroku, AWS basics)"
-                ],
-            },
-            {
-                section: "Soft Skills & Placement Training",
-                topics: [
-                    "Resume Building",
-                    "Mock Interviews",
-                    "Aptitude & Reasoning",
-                    "Communication Skills"
-                ],
-            }
-        ],
-        image: datascienceimg,
-    },
 
     {
         id: "fullstack",
@@ -277,14 +103,14 @@ export const courses = [
                 ],
             },
         ],
-         image: fullstack, 
+        image: fullstack,
     },
 
     {
-        id: "java",
-        title: "Java Programming",
+        id: "java-backend",
+        title: "Java Backend Development",
         duration: "5 Months",
-        batch:"Upcoming",
+        batch: "Upcoming",
         price: "₹40,000",
         oldPrice: "₹50,000",
         description:
@@ -419,7 +245,271 @@ export const courses = [
                 ],
             }
         ],
-        image: java,
+        image: javabackend,
+    },
+
+    {
+        id: "mern",
+        title: "MERN Stack Development",
+        duration: "6 Months",
+        batch: "Running",
+        price: "₹35,500",
+        oldPrice: "₹45,000",
+        description:
+            "Master MongoDB, Express.js, React, and Node.js. Build full-stack web apps from scratch and get placement support.",
+        rating: 4.8,
+        students: 700,
+        highlights: [
+            "Available Online and Offline",
+            "Certified Course",
+            "1-on-1 Doubt Sessions",
+            "Placement Assistance",
+        ],
+        curriculum: [
+            {
+                section: "Introduction to Web Development",
+                topics: ["HTML", "CSS", "JavaScript Basics", "Version Control (Git)"],
+            },
+            {
+                section: "JavaScript & Web Fundamentals",
+                topics: ["Basics of JavaScript", " Functions", "Arrays and Objects", "String and Array Methods", "Template Literals", "DOM Manipulation", "Event Handling", " Functions & Scope", "Higher-Order Functions","Debouncing and Throttling",
+                    "Arrow functions", "Promises and Async/Await", "Error Handling", "JSON Parsing", "Local Storage and Session Storage", "AJAX and Fetch API", "Introduction to ES6+ Features", "Classes & Inheritance ", "Optional Chaining","Nullish Coalescing",
+                    "Array/Object methods ","Advance Javascript","promises", "Async/Await", "Error Handling", "JSON Parsing", "Local Storage and Session Storage", "AJAX and Fetch API", "Introduction to ES6+ Features", "Classes & Inheritance ", "Optional Chaining","Nullish Coalescing",
+                ], 
+            },
+            {
+                section: "React.js Development",
+                topics: ["What is React and why use it?", "Setting up project with Create React App (CRA) or Vite", "Components", "Props and Prop Drilling", "Hooks", "Event Handling in React", "Conditional Rendering", "Forms", "Routing", "State Management", "Component Design", " Performance Optimization","React Query / TanStack Query"],
+            },
+            {
+                section: "Node.js & Express.js Backend",
+                topics: [
+                    "Node.js fundamentals",
+                    "Express.js APIs",
+                    "Authentication and Authorization",
+                    "Connecting Backend to Frontend",
+                ],
+            },
+            {
+                section: "MongoDB & Database Management",
+                topics: ["CRUD Operations", "Schema Design", "Mongoose ODM"],
+            },
+        ],
+        image: mern,
+    },
+   
+    {
+        id: "python-dev",
+        title: "Python Development",
+        duration: "5 Months",
+        batch: "Running",
+        price: "₹28,000",
+        oldPrice: "₹38,000",
+        description:
+            "Learn Python programming from basics to advanced. Build web apps, automation scripts, and data projects.",
+        rating: 4.6,
+        students: 450,
+        highlights: [
+            "Available Online and Offline",
+            "Certified Course",
+            "1-on-1 Doubt Sessions",
+            "Placement Assistance",
+        ],
+        curriculum: [
+            {
+                section: "Python Basics",
+                topics: [
+                    "Syntax and Variables",
+                    "Data Types",
+                    "Control Flow",
+                    "Functions",
+                ],
+            },
+            {
+                section: "Advanced Python",
+                topics: [
+                    "Object-Oriented Programming",
+                    "Modules and Packages",
+                    "Error Handling",
+                    "File Operations",
+                ],
+            },
+            {
+                section: "Django Development",
+                topics: [
+                    "Introduction to Django & MVT Architecture",
+                    "Setting up the Development Environment",
+                    "Creating Projects & Apps",
+                    "URL Routing and Views",
+                    "Templates and Static Files",
+                    "Models and Django ORM Basics",
+                    "Admin Interface Customization",
+                    "Forms and ModelForms",
+                    "User Authentication and Authorization",
+                    "Django Signals",
+                    "File Uploads and Media Handling",
+                    "Django Messaging Framework",
+                    "Class-Based Views and Mixins",
+                    "Django REST Framework for APIs",
+                    "Middleware Development",
+                    "Caching with Redis or Memcached",
+                    "Asynchronous Tasks with Celery",
+                    "Deployment on Heroku/AWS"
+                ],
+            },
+            {
+                section: "Flask Development",
+                topics: [
+                    "Introduction to Flask & Microservices Concept",
+                    "Installing and Setting up Flask",
+                    "Creating Routes and Handling Requests",
+                    "HTML Templates with Jinja2",
+                    "Static Files and Forms",
+                    "POST & GET Request Handling",
+                    "Blueprints for Modular Apps",
+                    "Flask Extensions (Flask-WTF, Flask-Login)",
+                    "Database Integration with SQLAlchemy",
+                    "REST API Creation with Flask-RESTful",
+                    "File Uploads and Validation",
+                    "Authentication & JWT Tokens",
+                    "Background Jobs with Celery/RQ",
+                    "API Versioning and Pagination",
+                    "Third-Party API Integration",
+                    "Deployment with Gunicorn, Nginx, Docker"
+                ],
+            },
+            
+        ],
+        image: python,
     }
 
+    // {
+    //     id: "datascience",
+    //     title: "Data Science & AI",
+    //     duration: "6 Months",
+    //     batch: "Upcoming",
+    //     price: "₹45,000",
+    //     oldPrice: "₹55,000",
+    //     description:
+    //         "Learn Machine Learning, Data Analysis, and AI techniques to solve real-world problems.",
+    //     rating: 4.9,
+    //     students: 500,
+    //     highlights: ["Live Projects", "Python & ML", "Placement Support"],
+    //     curriculum: [
+    //         {
+    //             section: "Python Programming Fundamentals",
+    //             topics: [
+    //                 "Variables & Data Types",
+    //                 "Control Flow (if, else, loops)",
+    //                 "Functions & Modules",
+    //                 "File Handling",
+    //                 "Object-Oriented Programming (OOP)",
+    //                 "Exception Handling",
+    //                 "Python Libraries Overview"
+    //             ],
+    //         },
+    //         {
+    //             section: "Python for Data Science",
+    //             topics: [
+    //                 "NumPy - Arrays, Broadcasting, Vectorization",
+    //                 "Pandas - DataFrames, Series, Data Cleaning",
+    //                 "Matplotlib & Seaborn - Visualization",
+    //                 "Data Wrangling & Preprocessing",
+    //                 "Exploratory Data Analysis (EDA)"
+    //             ],
+    //         },
+    //         {
+    //             section: "Statistics & Probability",
+    //             topics: [
+    //                 "Descriptive Statistics",
+    //                 "Probability Theory & Distributions",
+    //                 "Inferential Statistics",
+    //                 "Hypothesis Testing",
+    //                 "Correlation & Covariance"
+    //             ],
+    //         },
+    //         {
+    //             section: "SQL for Data Science",
+    //             topics: [
+    //                 "SQL Basics",
+    //                 "Joins & Subqueries",
+    //                 "Aggregations & Window Functions",
+    //                 "Data Manipulation with SQL"
+    //             ],
+    //         },
+    //         {
+    //             section: "Machine Learning",
+    //             topics: [
+    //                 "Supervised Learning (Regression, Classification)",
+    //                 "Unsupervised Learning (Clustering, PCA)",
+    //                 "Model Selection & Evaluation",
+    //                 "Bias-Variance Tradeoff",
+    //                 "Overfitting & Regularization",
+    //                 "Scikit-learn Pipelines"
+    //             ],
+    //         },
+    //         {
+    //             section: "Advanced Machine Learning",
+    //             topics: [
+    //                 "Ensemble Methods (Random Forest, XGBoost)",
+    //                 "Feature Engineering",
+    //                 "Hyperparameter Tuning (GridSearch, RandomSearch)",
+    //                 "Model Interpretability (SHAP, LIME)"
+    //             ],
+    //         },
+    //         {
+    //             section: "Deep Learning & Neural Networks",
+    //             topics: [
+    //                 "Introduction to Neural Networks",
+    //                 "TensorFlow/Keras Basics",
+    //                 "CNNs for Image Processing",
+    //                 "RNNs & LSTM for Time Series/Text",
+    //                 "Transfer Learning",
+    //                 "Model Optimization"
+    //             ],
+    //         },
+    //         {
+    //             section: "Natural Language Processing (NLP)",
+    //             topics: [
+    //                 "Text Cleaning & Preprocessing",
+    //                 "TF-IDF & Word Embeddings",
+    //                 "Sentiment Analysis",
+    //                 "Text Classification",
+    //                 "NLP with Transformers"
+    //             ],
+    //         },
+    //         {
+    //             section: "Projects & Real-world Case Studies",
+    //             topics: [
+    //                 "House Price Prediction",
+    //                 "Customer Segmentation",
+    //                 "Sentiment Analysis on Tweets",
+    //                 "Image Classification",
+    //                 "Loan Default Prediction"
+    //             ],
+    //         },
+    //         {
+    //             section: "Deployment & MLOps Basics",
+    //             topics: [
+    //                 "Model Deployment with Flask",
+    //                 "Using Streamlit for ML Apps",
+    //                 "Introduction to Docker",
+    //                 "Version Control (Git & GitHub)",
+    //                 "Cloud Deployment (Render, Heroku, AWS basics)"
+    //             ],
+    //         },
+    //         {
+    //             section: "Soft Skills & Placement Training",
+    //             topics: [
+    //                 "Resume Building",
+    //                 "Mock Interviews",
+    //                 "Aptitude & Reasoning",
+    //                 "Communication Skills"
+    //             ],
+    //         }
+    //     ],
+    //     image: datascienceimg,
+    // },
+
+   
 ];
