@@ -119,7 +119,7 @@ export default function Navbar() {
                     </Link>
 
                     {/* Desktop Menu */}
-                    <ul className="hidden md:flex items-center space-x-8  pr-[70px]">
+                    <ul className="hidden md:flex items-center space-x-8 pr-[70px]">
                         {menus.map((menu, i) => (
                             <li
                                 key={i}
@@ -148,9 +148,7 @@ export default function Navbar() {
                                                     >
                                                         {opt.subOptions ? (
                                                             <>
-                                                                <div
-                                                                    className="flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                                                                >
+                                                                <div className="flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer">
                                                                     {opt.label}
                                                                     <FaChevronRight className="text-xs ml-2" />
                                                                 </div>
@@ -168,7 +166,9 @@ export default function Navbar() {
                                                                                     <>
                                                                                         <div className="flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer">
                                                                                             {sub.label}
-                                                                                            <FaChevronDown className={`text-xs ml-2 ${openL2D === k ? "rotate-180" : ""}`} />
+                                                                                            <FaChevronDown
+                                                                                                className={`text-xs ml-2 ${openL2D === k ? "rotate-180" : ""}`}
+                                                                                            />
                                                                                         </div>
                                                                                         {openL2D === k && (
                                                                                             <ul className="absolute left-full top-0 bg-white text-black shadow-lg rounded w-64 py-2">
@@ -231,10 +231,12 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Mobile Drawer */}
+            {/* Mobile Drawer Overlay */}
             {drawerOpen && (
                 <div className="fixed inset-0 bg-black/50 z-[9998]" onClick={() => setDrawerOpen(false)} />
             )}
+
+            {/* Mobile Drawer */}
             <div
                 className={`fixed top-0 left-0 h-full w-72 bg-white text-black z-[9999] transform transition-transform duration-300 ease-in-out ${drawerOpen ? "translate-x-0" : "-translate-x-full"
                     } md:hidden`}
@@ -245,7 +247,7 @@ export default function Navbar() {
                         <FaTimes />
                     </button>
                 </div>
-                <div className="p-3">
+                <div className="p-3 h-full overflow-y-auto">
                     <ul className="space-y-1">
                         {menus.map((menu, i) => (
                             <li key={i} className="border-b last:border-b-0 pb-2">
@@ -261,7 +263,8 @@ export default function Navbar() {
                                         >
                                             <span>{menu.label}</span>
                                             <FaChevronDown
-                                                className={`text-xs transition-transform ${openMainM === i ? "rotate-180" : ""}`}
+                                                className={`text-xs transition-transform ${openMainM === i ? "rotate-180" : ""
+                                                    }`}
                                             />
                                         </button>
                                         {openMainM === i && (
@@ -279,7 +282,8 @@ export default function Navbar() {
                                                                 >
                                                                     <span>{opt.label}</span>
                                                                     <FaChevronDown
-                                                                        className={`text-xs transition-transform ${openL1M === j ? "rotate-180" : ""}`}
+                                                                        className={`text-xs transition-transform ${openL1M === j ? "rotate-180" : ""
+                                                                            }`}
                                                                     />
                                                                 </button>
                                                                 {openL1M === j && (
@@ -287,7 +291,35 @@ export default function Navbar() {
                                                                         {opt.subOptions.map((sub, k) => (
                                                                             <li key={k} className="py-1">
                                                                                 {sub.subOptions ? (
-                                                                                    <span className="block py-2 text-sm">{sub.label}</span>
+                                                                                    <>
+                                                                                        <button
+                                                                                            className="w-full flex items-center justify-between py-2 text-sm hover:text-blue-600"
+                                                                                            onClick={() =>
+                                                                                                setOpenL2M(openL2M === k ? null : k)
+                                                                                            }
+                                                                                        >
+                                                                                            <span>{sub.label}</span>
+                                                                                            <FaChevronDown
+                                                                                                className={`text-xs transition-transform ${openL2M === k ? "rotate-180" : ""
+                                                                                                    }`}
+                                                                                            />
+                                                                                        </button>
+                                                                                        {openL2M === k && (
+                                                                                            <ul className="pl-5">
+                                                                                                {sub.subOptions.map((leaf, z) => (
+                                                                                                    <li key={z}>
+                                                                                                        <Link
+                                                                                                            to={leaf.link}
+                                                                                                            className="block py-2 text-sm hover:text-blue-600"
+                                                                                                            onClick={handleMobileLinkClick}
+                                                                                                        >
+                                                                                                            {leaf.label}
+                                                                                                        </Link>
+                                                                                                    </li>
+                                                                                                ))}
+                                                                                            </ul>
+                                                                                        )}
+                                                                                    </>
                                                                                 ) : (
                                                                                     <Link
                                                                                         to={sub.link}
