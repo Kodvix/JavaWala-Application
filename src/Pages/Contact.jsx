@@ -18,7 +18,7 @@ export default function ContactUs() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("https://formspree.io/f/xyzpvkon", {
+            const response = await fetch("https://formspree.io/f/mwpqjrdp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
