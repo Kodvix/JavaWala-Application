@@ -108,7 +108,7 @@ export const courses = [
 
     {
         id: "java-backend",
-        // title: "Java Backend Development",
+         title: "Java Backend Development",
         duration: "5 Months",
         batch: "Upcoming",
         price: "₹40,000",

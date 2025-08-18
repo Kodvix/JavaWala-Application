@@ -9,7 +9,7 @@ export default function CourseCard({ course }) {
                 className="w-full h-35 object-contain sm:object-cover rounded bg-white"
             />
 
-            <h3 className="text-lg font-semibold mt-2 line-clamp-2">{course.title}</h3>
+            <h3 className="text-lg font-semibold mt-2 line-clamp-2 text-white">{course.title}</h3>
             <p className="text-gray-600 mt-1 text-sm">{course.duration}</p>
 
             <div className="flex items-center mt-2">
