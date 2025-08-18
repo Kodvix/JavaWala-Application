@@ -162,41 +162,63 @@ export default function Home() {
             <section
                 id="courses"
                 ref={courseSectionRef}
-                className="relative pt-10 sm:pt-14 md:pt-24 p-6 pb-8 bg-white shadow-xl min-h-screen z-20"
+                className="relative pt-10 sm:pt-14 md:pt-12 p-6 pb-8 bg-white shadow-xl min-h-screen z-20"
                 style={{ zIndex: 9999 }}
             >
-                {/* Scrollable Container with Arrows */}
-                <div className="relative w-full">
-                    {/* Left Arrow */}
-                    <button
-                        onClick={scrollLeft}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/70 hover:bg-gray-200 text-gray-700 p-2 rounded-full shadow-md"
-                    >
-                        <FaChevronLeft />
-                    </button>
+                <div className="max-w-7xl mx-auto">
+                    <h2 className="text-3xl font-bold text-center mb-8 text-blue-600">
+                        Our Courses
+                    </h2>
 
-                    {/* Right Arrow */}
-                    <button
-                        onClick={scrollRight}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/70 hover:bg-gray-200 text-gray-700 p-2 rounded-full shadow-md"
-                    >
-                        <FaChevronRight />
-                    </button>
+                    {/* Conditional rendering based on screen size */}
+                    <div className="relative w-full">
+                        {/* Mobile/Tablet Scrollable View */}
+                        <div className="block xl:hidden">
+                            {/* Left Arrow */}
+                            <button
+                                onClick={scrollLeft}
+                                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/70 hover:bg-gray-200 text-gray-700 p-2 rounded-full shadow-md"
+                            >
+                                <FaChevronLeft />
+                            </button>
 
-                    {/* Cards Scroll Area */}
-                    <div className="w-full overflow-x-auto scrollbar-hide px-1" ref={scrollRef}>
-                        <div
-                            className={`flex gap-8 px-6 ${courses.length <= 3 ? "justify-center flex-wrap" : ""
-                                }`}
-                        >
-                            {courses.map((course) => (
-                                <div key={course.id} className="flex-shrink-0 w-[300px]">
-                                    <CourseCard course={course} />
+                            {/* Right Arrow */}
+                            <button
+                                onClick={scrollRight}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/70 hover:bg-gray-200 text-gray-700 p-2 rounded-full shadow-md"
+                            >
+                                <FaChevronRight />
+                            </button>
+
+                            {/* Cards Scroll Area */}
+                            <div className="w-full overflow-x-auto scrollbar-hide px-1" ref={scrollRef}>
+                                <div className="flex gap-6 px-6" style={{ minWidth: "fit-content" }}>
+                                    {courses.map((course) => (
+                                        <div key={course.id} className="flex-shrink-0 w-[280px] sm:w-[320px]">
+                                            <CourseCard course={course} />
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
+                        </div>
+
+                        {/* Desktop Grid View - Centered */}
+                        <div className="hidden xl:block">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center max-w-fit mx-auto">
+                                {courses.map((course) => (
+                                    <div key={course.id} className="w-[300px]">
+                                        <CourseCard course={course} />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>   {/* Floating Action Button with Social Links */}
+
+                 
+                   
+                </div>
+
+                {/* Floating Action Button - Keep this as is */}
                 <div className="fixed bottom-6 right-6 z-50">
                     <div
                         className={`flex flex-col items-end gap-3 mb-3 transition-all duration-300 ${showSocials ? "opacity-100" : "opacity-0 pointer-events-none"
