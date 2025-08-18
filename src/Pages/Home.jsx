@@ -166,7 +166,7 @@ export default function Home() {
                 style={{ zIndex: 9999 }}
             >
                 {/* Scrollable Container with Arrows */}
-                <div  className="relative w-full" >
+                <div className="relative w-full">
                     {/* Left Arrow */}
                     <button
                         onClick={scrollLeft}
@@ -184,23 +184,19 @@ export default function Home() {
                     </button>
 
                     {/* Cards Scroll Area */}
-                    <div
-                        className="w-full overflow-x-auto scrollbar-hide px-1"
-                        ref={scrollRef}
-                    >
-                        <div className="flex gap-8 px-6">
+                    <div className="w-full overflow-x-auto scrollbar-hide px-1" ref={scrollRef}>
+                        <div
+                            className={`flex gap-8 px-6 ${courses.length <= 3 ? "justify-center flex-wrap" : ""
+                                }`}
+                        >
                             {courses.map((course) => (
-                                <div
-                                    key={course.id}
-                                    className="flex-shrink-0 w-[300px]"
-                                >
+                                <div key={course.id} className="flex-shrink-0 w-[300px]">
                                     <CourseCard course={course} />
                                 </div>
                             ))}
                         </div>
                     </div>
-                </div>
-                {/* Floating Action Button with Social Links */}
+                </div>   {/* Floating Action Button with Social Links */}
                 <div className="fixed bottom-6 right-6 z-50">
                     <div
                         className={`flex flex-col items-end gap-3 mb-3 transition-all duration-300 ${showSocials ? "opacity-100" : "opacity-0 pointer-events-none"
