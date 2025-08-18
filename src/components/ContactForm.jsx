@@ -82,7 +82,7 @@ export default function ContactForm() {
         formPayload.append("message", formData.message);
 
         try {
-            const response = await fetch("https://formspree.io/f/xkgzpkgy", {
+            const response = await fetch("https://formspree.io/f/mwpqjrdp", {
                 method: "POST",
                 body: formPayload,
                 headers: {
