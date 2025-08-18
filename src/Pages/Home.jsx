@@ -8,6 +8,8 @@ import indust from '../assets/indust.jpg';
 import { SiImessage } from "react-icons/si";
 import { Link } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
+
 import {
     FaPlus,
     FaWhatsapp,
@@ -25,6 +27,8 @@ import {
 } from "react-icons/fa";
 
 export default function Home() {
+    const location = useLocation();
+
     const [showSocials, setShowSocials] = useState(false);
     const courseSectionRef = useRef();
    
@@ -37,6 +41,14 @@ export default function Home() {
     const scrollRight = () => {
         scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
     };
+    useEffect(() => {
+        if (location.hash === "#courses") {
+            const section = document.getElementById("courses");
+            if (section) {
+                section.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    }, [location]);
   
     useEffect(() => {
         const interval = setInterval(() => {
@@ -80,7 +92,7 @@ export default function Home() {
         <>
             {/* HERO SECTION WITH IMAGE + TEXT SPLIT */}
             <section
-                className="relative w-full min-h-1/2 pt-10 px-4 sm:px-6 md:px-20 bg-[#C4E1E6] shadow-xl"
+                className="relative w-full min-h-1/2 pt-10 px-4 sm:px-6 md:px-20 bg-[#C4E1E6] shadow-xl "
                 style={{
                     borderTopLeftRadius: "60px",
                     borderTopRightRadius: "60px",
@@ -148,13 +160,13 @@ export default function Home() {
             {/* COURSE SECTION */}
             {/* COURSE SECTION */}
             <section
-                ref={courseSectionRef}
                 id="courses"
+                ref={courseSectionRef}
                 className="relative pt-10 sm:pt-14 md:pt-24 p-6 pb-8 bg-white shadow-xl min-h-screen z-20"
                 style={{ zIndex: 9999 }}
             >
                 {/* Scrollable Container with Arrows */}
-                <div className="relative w-full">
+                <div  className="relative w-full" >
                     {/* Left Arrow */}
                     <button
                         onClick={scrollLeft}
@@ -441,12 +453,11 @@ export default function Home() {
                             <h3 className="text-xl font-semibold text-white mb-4">Quick Links</h3>
                             <ul className="space-y-2 text-sm">
                                 <li><a href="#" className="hover:text-white transition">Home</a></li>
-                                <li><a href="#" className="hover:text-white transition">Courses</a></li>
-                                <li><a href="#" className="hover:text-white transition">About Us</a></li>
-                                <li><a href="#" className="hover:text-white transition">Contact</a></li>
+                                <li><a href="#courses" className="hover:text-white transition">Courses</a></li>
+                                <li><a href="/aboutus" className="hover:text-white transition">About Us</a></li>
+                                <li><a href="/contact" className="hover:text-white transition">Contact</a></li>
                             </ul>
                         </div>
-
                         {/* Contact Info */}
                         <div>
                             <h3 className="text-xl font-semibold text-white mb-4">Contact Us</h3>
@@ -455,7 +466,7 @@ export default function Home() {
                                     <FaPhoneAlt /> +91 12345 67890
                                 </li>
                                 <li className="flex items-center gap-2">
-                                    <FaEnvelope /> support@javawala.com
+                                    <FaEnvelope /> info@javawala.com
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <FaMapMarkerAlt /> Indore, India

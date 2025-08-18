@@ -13,7 +13,7 @@ import girl3 from "../assets/girll3.jpg";
 import girl4 from "../assets/girll4.jpg";
 import { successStories } from "../Data/studentSuccessData"; 
 import { FaUserCircle, FaUserAlt,  FaRegUser } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
 const profileIcons = [FaUserCircle, FaUserAlt, FaUserTie, FaRegUser];
 
 
@@ -154,9 +154,13 @@ export default function CourseDetail() {
                         <span className="text-lg font-semibold text-green-600">{course.price}</span>
                         <span className="text-sm text-gray-500">Duration: {course.duration}</span>
                     </div>
+                    <Link to="/contact">
+
                     <button className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
                         Enroll Now
                     </button>
+                    </Link>
+
                 </div>
             </motion.div>
             {/* 🔘 Tabs */}
