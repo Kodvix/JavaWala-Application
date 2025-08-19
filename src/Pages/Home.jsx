@@ -1,4 +1,4 @@
-import { useState, useRef ,useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import { courses } from "../Data/courses";
 import CourseCard from "../components/CourseCard";
 import { FaRocket, FaUserTie, FaHandshake } from "react-icons/fa";
@@ -18,8 +18,6 @@ import {
     FaGoogle,
 } from "react-icons/fa";
 import {
-    
-    
     FaTwitter,
     FaEnvelope,
     FaPhoneAlt,
@@ -30,17 +28,52 @@ export default function Home() {
     const location = useLocation();
 
     const [showSocials, setShowSocials] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const courseSectionRef = useRef();
-   
     const scrollRef = useRef();
+    const featuresScrollRef = useRef();
 
+    // Course scroll functions
     const scrollLeft = () => {
-        scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
+        if (scrollRef.current) {
+            const container = scrollRef.current;
+            const cardWidth = 300; // Fixed width for consistency
+            const newIndex = Math.max(0, currentIndex - 1);
+            setCurrentIndex(newIndex);
+            container.scrollTo({
+                left: newIndex * cardWidth,
+                behavior: "smooth"
+            });
+        }
     };
 
     const scrollRight = () => {
-        scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
+        if (scrollRef.current) {
+            const container = scrollRef.current;
+            const cardWidth = 300; // Fixed width for consistency
+            const maxIndex = courses.length - 1;
+            const newIndex = Math.min(maxIndex, currentIndex + 1);
+            setCurrentIndex(newIndex);
+            container.scrollTo({
+                left: newIndex * cardWidth,
+                behavior: "smooth"
+            });
+        }
     };
+
+    // Features scroll functions
+    const scrollFeaturesLeft = () => {
+        if (featuresScrollRef.current) {
+            featuresScrollRef.current.scrollBy({ left: -280, behavior: "smooth" });
+        }
+    };
+
+    const scrollFeaturesRight = () => {
+        if (featuresScrollRef.current) {
+            featuresScrollRef.current.scrollBy({ left: 280, behavior: "smooth" });
+        }
+    };
+
     useEffect(() => {
         if (location.hash === "#courses") {
             const section = document.getElementById("courses");
@@ -49,24 +82,26 @@ export default function Home() {
             }
         }
     }, [location]);
-  
+
+    // Auto-scroll for courses (optional - remove if you don't want auto-scroll)
     useEffect(() => {
         const interval = setInterval(() => {
-            if (scrollRef.current) {
-                const container = scrollRef.current;
-                const cardWidth = container.firstChild?.firstChild?.offsetWidth || 0;
-                const maxScroll = container.scrollWidth - container.clientWidth;
+            if (scrollRef.current && window.innerWidth < 1280) { // Only on mobile/tablet
+                const maxIndex = courses.length - 1;
+                const nextIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+                setCurrentIndex(nextIndex);
 
-                if (container.scrollLeft + cardWidth >= maxScroll) {
-                    container.scrollTo({ left: 0, behavior: "smooth" });
-                } else {
-                    container.scrollBy({ left: cardWidth, behavior: "smooth" });
-                }
+                const cardWidth = 300;
+                scrollRef.current.scrollTo({
+                    left: nextIndex * cardWidth,
+                    behavior: "smooth"
+                });
             }
-        }, 2000);
+        }, 3000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [currentIndex]);
+
     const features = [
         {
             title: "Industry-Focused Curriculum",
@@ -97,7 +132,6 @@ export default function Home() {
                     borderTopLeftRadius: "60px",
                     borderTopRightRadius: "60px",
                     zIndex: 9999,
-                  
                 }}
             >
                 <div className="flex flex-col md:flex-row items-center justify-between gap-10 w-full max-w-[1440px] mx-auto">
@@ -115,7 +149,6 @@ export default function Home() {
                                 Learn. Build. Get Placed.
                             </motion.h1>
                         </div>
-
 
                         <motion.p
                             className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-gray-700 max-w-md leading-relaxed"
@@ -148,7 +181,7 @@ export default function Home() {
                         <div className="bg-blue-100 border-l-4 border-blue-400 p-4 rounded-xl shadow-md w-full rotate-[-1deg] hover:animate-bounceOnce hover:shadow-blue-500 transition-transform duration-300">
                             <div className="flex items-center gap-2 text-base sm:text-lg font-semibold">
                                 <SiImessage className="text-blue-600" />
-                                Oh that’s great, let’s explore together!
+                                Oh that's great, let's explore together!
                             </div>
                             <p className="text-sm text-gray-700 mt-1">Sam</p>
                         </div>
@@ -156,8 +189,6 @@ export default function Home() {
                 </div>
             </section>
 
-
-            {/* COURSE SECTION */}
             {/* COURSE SECTION */}
             <section
                 id="courses"
@@ -172,33 +203,70 @@ export default function Home() {
 
                     {/* Conditional rendering based on screen size */}
                     <div className="relative w-full">
-                        {/* Mobile/Tablet Scrollable View */}
+                        {/* Mobile/Tablet Scrollable View - Show one card at a time */}
                         <div className="block xl:hidden">
                             {/* Left Arrow */}
                             <button
                                 onClick={scrollLeft}
-                                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/70 hover:bg-gray-200 text-gray-700 p-2 rounded-full shadow-md"
+                                disabled={currentIndex === 0}
+                                className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all ${currentIndex === 0
+                                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                        : 'bg-white hover:bg-gray-100 text-gray-700 hover:shadow-xl'
+                                    }`}
                             >
-                                <FaChevronLeft />
+                                <FaChevronLeft size={16} />
                             </button>
 
                             {/* Right Arrow */}
                             <button
                                 onClick={scrollRight}
-                                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/70 hover:bg-gray-200 text-gray-700 p-2 rounded-full shadow-md"
+                                disabled={currentIndex === courses.length - 1}
+                                className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all ${currentIndex === courses.length - 1
+                                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                        : 'bg-white hover:bg-gray-100 text-gray-700 hover:shadow-xl'
+                                    }`}
                             >
-                                <FaChevronRight />
+                                <FaChevronRight size={16} />
                             </button>
 
-                            {/* Cards Scroll Area */}
-                            <div className="w-full overflow-x-auto scrollbar-hide px-1" ref={scrollRef}>
-                                <div className="flex gap-6 px-6" style={{ minWidth: "fit-content" }}>
+                            {/* Cards Scroll Area - Single card display on mobile */}
+                            <div className="w-full overflow-hidden px-1">
+                                <div
+                                    className="flex transition-transform duration-300 ease-in-out gap-6 px-6"
+                                    ref={scrollRef}
+                                    style={{
+                                        transform: `translateX(-${currentIndex * 300}px)`,
+                                        width: `${courses.length * 300}px`
+                                    }}
+                                >
                                     {courses.map((course) => (
-                                        <div key={course.id} className="flex-shrink-0 w-[280px] sm:w-[320px]">
+                                        <div key={course.id} className="flex-shrink-0 w-[280px] mx-auto">
                                             <CourseCard course={course} />
                                         </div>
                                     ))}
                                 </div>
+                            </div>
+
+                            {/* Pagination dots */}
+                            <div className="flex justify-center gap-2 mt-6">
+                                {courses.map((_, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => {
+                                            setCurrentIndex(index);
+                                            if (scrollRef.current) {
+                                                scrollRef.current.scrollTo({
+                                                    left: index * 300,
+                                                    behavior: "smooth"
+                                                });
+                                            }
+                                        }}
+                                        className={`w-3 h-3 rounded-full transition-all ${index === currentIndex
+                                                ? 'bg-blue-600 scale-125'
+                                                : 'bg-gray-300 hover:bg-gray-400'
+                                            }`}
+                                    />
+                                ))}
                             </div>
                         </div>
 
@@ -213,12 +281,9 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-
-                 
-                   
                 </div>
 
-                {/* Floating Action Button - Keep this as is */}
+                {/* Floating Action Button */}
                 <div className="fixed bottom-6 right-6 z-50">
                     <div
                         className={`flex flex-col items-end gap-3 mb-3 transition-all duration-300 ${showSocials ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -263,8 +328,8 @@ export default function Home() {
                         <FaPlus className="text-lg" />
                     </button>
                 </div>
-                <div className="w-full mt-1 bg-white shadow-xl text-black min-h-screen py-0 space-y-10 rounded-2xl">
 
+                <div className="w-full mt-1 bg-white shadow-xl text-black min-h-screen py-0 space-y-10 rounded-2xl">
 
                     {/* Why Choose Us */}
                     <section className="pt-4 sm:pt-8 md:pt-16 pb-10 bg-white px-4 md:px-12">
@@ -288,24 +353,42 @@ export default function Home() {
                             ))}
                         </div>
 
-                        {/* Mobile Horizontal Scroll View */}
-                        <div
-                            className="block md:hidden overflow-x-auto scrollbar-hide px-2"
-                            ref={scrollRef}
-                        >
-                            <div className="flex gap-4 w-max px-1">
-                                {features.map((feature, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex-shrink-0 w-[72vw] bg-gray-900 px-4 py-5 rounded-xl shadow-xl min-h-[220px] flex flex-col items-center text-center transform transition-transform duration-500 hover:scale-105"
-                                    >
-                                        <div className="bg-gradient-to-br from-orange-500 to-yellow-400 text-white p-3 rounded-full mb-3 transform transition-transform duration-500 group-hover:rotate-[360deg]">
-                                            {feature.icon}
+                        {/* Mobile Horizontal Scroll View with arrows */}
+                        <div className="block md:hidden relative">
+                            {/* Left Arrow for features */}
+                            <button
+                                onClick={scrollFeaturesLeft}
+                                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 p-2 rounded-full shadow-md"
+                            >
+                                <FaChevronLeft />
+                            </button>
+
+                            {/* Right Arrow for features */}
+                            <button
+                                onClick={scrollFeaturesRight}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 p-2 rounded-full shadow-md"
+                            >
+                                <FaChevronRight />
+                            </button>
+
+                            <div
+                                className="overflow-x-auto scrollbar-hide px-2"
+                                ref={featuresScrollRef}
+                            >
+                                <div className="flex gap-4 w-max px-1">
+                                    {features.map((feature, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex-shrink-0 w-[72vw] bg-gray-900 px-4 py-5 rounded-xl shadow-xl min-h-[220px] flex flex-col items-center text-center transform transition-transform duration-500 hover:scale-105"
+                                        >
+                                            <div className="bg-gradient-to-br from-orange-500 to-yellow-400 text-white p-3 rounded-full mb-3 transform transition-transform duration-500 group-hover:rotate-[360deg]">
+                                                {feature.icon}
+                                            </div>
+                                            <h3 className="text-lg font-semibold mb-2 text-white">{feature.title}</h3>
+                                            <p className="text-gray-300 text-sm">{feature.description}</p>
                                         </div>
-                                        <h3 className="text-lg font-semibold mb-2 text-white">{feature.title}</h3>
-                                        <p className="text-gray-300 text-sm">{feature.description}</p>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -375,7 +458,7 @@ export default function Home() {
                         {/* Content */}
                         <div className="relative z-10 max-w-6xl mx-auto">
                             <h2 className="text-2xl font-bold text-center mb-12 text-white">
-                                 What Makes Us Different?
+                                What Makes Us Different?
                             </h2>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -423,6 +506,7 @@ export default function Home() {
                         </div>
                     </section>
                 </div>
+
                 <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6">
                     <button
                         onClick={() =>
@@ -440,12 +524,11 @@ export default function Home() {
                         Contact Us
                     </Link>
                 </div>
-
-               
             </section>
+
             <footer className="bg-black text-gray-300 py-12 px-6 md:px-20">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
-                 
+
                     <div>
                         <h2 className="text-2xl font-bold text-white mb-4">Javawala 🚀</h2>
                         <p className="text-sm mb-4">
@@ -481,7 +564,7 @@ export default function Home() {
                             <h3 className="text-xl font-semibold text-white mb-4">Contact Us</h3>
                             <ul className="space-y-3 text-sm">
                                 <li className="flex items-center gap-2">
-                                    <FaPhoneAlt /> +91 12345 67890
+                                    <FaPhoneAlt /> +91 8109600225
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <FaEnvelope /> connect@javawala.com
@@ -492,7 +575,6 @@ export default function Home() {
                             </ul>
                         </div>
                     </div>
-
 
                     {/* Newsletter */}
                     <div>
@@ -518,8 +600,6 @@ export default function Home() {
                     © {new Date().getFullYear()} Javawala. All rights reserved.
                 </div>
             </footer>
-
-           
         </>
     );
 }
