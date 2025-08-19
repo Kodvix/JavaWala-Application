@@ -484,7 +484,7 @@ export default function Home() {
                                     <FaPhoneAlt /> +91 12345 67890
                                 </li>
                                 <li className="flex items-center gap-2">
-                                    <FaEnvelope /> info@javawala.com
+                                    <FaEnvelope /> connect@javawala.com
                                 </li>
                                 <li className="flex items-center gap-2">
                                     <FaMapMarkerAlt /> Indore, India
