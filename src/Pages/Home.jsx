@@ -37,7 +37,7 @@ export default function Home() {
     const scrollLeft = () => {
         if (scrollRef.current) {
             const container = scrollRef.current;
-            const cardWidth = 300; // Fixed width for consistency
+            const cardWidth = container.offsetWidth; // Use full container width
             const newIndex = Math.max(0, currentIndex - 1);
             setCurrentIndex(newIndex);
             container.scrollTo({
@@ -50,7 +50,7 @@ export default function Home() {
     const scrollRight = () => {
         if (scrollRef.current) {
             const container = scrollRef.current;
-            const cardWidth = 300; // Fixed width for consistency
+            const cardWidth = container.offsetWidth; // Use full container width
             const maxIndex = courses.length - 1;
             const newIndex = Math.min(maxIndex, currentIndex + 1);
             setCurrentIndex(newIndex);
@@ -62,17 +62,17 @@ export default function Home() {
     };
 
     // Features scroll functions
-    const scrollFeaturesLeft = () => {
-        if (featuresScrollRef.current) {
-            featuresScrollRef.current.scrollBy({ left: -280, behavior: "smooth" });
-        }
-    };
+    // const scrollFeaturesLeft = () => {
+    //     if (featuresScrollRef.current) {
+    //         featuresScrollRef.current.scrollBy({ left: -280, behavior: "smooth" });
+    //     }
+    // };
 
-    const scrollFeaturesRight = () => {
-        if (featuresScrollRef.current) {
-            featuresScrollRef.current.scrollBy({ left: 280, behavior: "smooth" });
-        }
-    };
+    // const scrollFeaturesRight = () => {
+    //     if (featuresScrollRef.current) {
+    //         featuresScrollRef.current.scrollBy({ left: 280, behavior: "smooth" });
+    //     }
+    // };
 
     useEffect(() => {
         if (location.hash === "#courses") {
@@ -91,7 +91,7 @@ export default function Home() {
                 const nextIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
                 setCurrentIndex(nextIndex);
 
-                const cardWidth = 300;
+                const cardWidth = scrollRef.current.offsetWidth;
                 scrollRef.current.scrollTo({
                     left: nextIndex * cardWidth,
                     behavior: "smooth"
@@ -205,43 +205,49 @@ export default function Home() {
                     <div className="relative w-full">
                         {/* Mobile/Tablet Scrollable View - Show one card at a time */}
                         <div className="block xl:hidden">
-                            {/* Left Arrow */}
-                            <button
-                                onClick={scrollLeft}
-                                disabled={currentIndex === 0}
-                                className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all ${currentIndex === 0
-                                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                        : 'bg-white hover:bg-gray-100 text-gray-700 hover:shadow-xl'
-                                    }`}
-                            >
-                                <FaChevronLeft size={16} />
-                            </button>
+                            {/* Navigation Arrows - Positioned outside the scroll container */}
+                            <div className="flex justify-between items-center mb-4">
+                                <button
+                                    onClick={scrollLeft}
+                                    disabled={currentIndex === 0}
+                                    className={`p-3 rounded-full shadow-lg transition-all z-10 ${currentIndex === 0
+                                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                            : 'bg-white hover:bg-gray-100 text-gray-700 hover:shadow-xl border'
+                                        }`}
+                                >
+                                    <FaChevronLeft size={16} />
+                                </button>
 
-                            {/* Right Arrow */}
-                            <button
-                                onClick={scrollRight}
-                                disabled={currentIndex === courses.length - 1}
-                                className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full shadow-lg transition-all ${currentIndex === courses.length - 1
-                                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                        : 'bg-white hover:bg-gray-100 text-gray-700 hover:shadow-xl'
-                                    }`}
-                            >
-                                <FaChevronRight size={16} />
-                            </button>
+                                <div className="text-center text-sm text-gray-500">
+                                    {currentIndex + 1} of {courses.length}
+                                </div>
 
-                            {/* Cards Scroll Area - Single card display on mobile */}
-                            <div className="w-full overflow-hidden px-1">
+                                <button
+                                    onClick={scrollRight}
+                                    disabled={currentIndex === courses.length - 1}
+                                    className={`p-3 rounded-full shadow-lg transition-all z-10 ${currentIndex === courses.length - 1
+                                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                            : 'bg-white hover:bg-gray-100 text-gray-700 hover:shadow-xl border'
+                                        }`}
+                                >
+                                    <FaChevronRight size={16} />
+                                </button>
+                            </div>
+
+                            {/* Cards Scroll Area - Single card display on mobile, perfectly centered */}
+                            <div className="w-full overflow-hidden">
                                 <div
-                                    className="flex transition-transform duration-300 ease-in-out gap-6 px-6"
+                                    className="flex transition-transform duration-300 ease-in-out"
                                     ref={scrollRef}
                                     style={{
-                                        transform: `translateX(-${currentIndex * 300}px)`,
-                                        width: `${courses.length * 300}px`
+                                        transform: `translateX(-${currentIndex * 100}%)`,
                                     }}
                                 >
                                     {courses.map((course) => (
-                                        <div key={course.id} className="flex-shrink-0 w-[280px] mx-auto">
-                                            <CourseCard course={course} />
+                                        <div key={course.id} className="flex-shrink-0 w-full flex justify-center px-4">
+                                            <div className="w-full max-w-[320px]">
+                                                <CourseCard course={course} />
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
@@ -255,10 +261,7 @@ export default function Home() {
                                         onClick={() => {
                                             setCurrentIndex(index);
                                             if (scrollRef.current) {
-                                                scrollRef.current.scrollTo({
-                                                    left: index * 300,
-                                                    behavior: "smooth"
-                                                });
+                                                scrollRef.current.style.transform = `translateX(-${index * 100}%)`;
                                             }
                                         }}
                                         className={`w-3 h-3 rounded-full transition-all ${index === currentIndex
@@ -356,20 +359,9 @@ export default function Home() {
                         {/* Mobile Horizontal Scroll View with arrows */}
                         <div className="block md:hidden relative">
                             {/* Left Arrow for features */}
-                            <button
-                                onClick={scrollFeaturesLeft}
-                                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 p-2 rounded-full shadow-md"
-                            >
-                                <FaChevronLeft />
-                            </button>
-
+                           
                             {/* Right Arrow for features */}
-                            <button
-                                onClick={scrollFeaturesRight}
-                                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-gray-200 text-gray-700 p-2 rounded-full shadow-md"
-                            >
-                                <FaChevronRight />
-                            </button>
+                           
 
                             <div
                                 className="overflow-x-auto scrollbar-hide px-2"
