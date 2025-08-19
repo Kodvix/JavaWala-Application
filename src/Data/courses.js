@@ -13,8 +13,8 @@ export const courses = [
         title: "Full Stack Development",
         duration: "4.5 Months",
         batch: "Upcoming",
-        price: "₹38,000",
-        oldPrice: "₹48,000",
+        price: "₹25,000",
+        oldPrice: "₹35,000",
         description:
             "Become a job-ready Full Stack Developer. Learn everything from HTML, CSS, and JS to advanced backend, databases, and deployment.",
         rating: 4.85,
@@ -111,8 +111,8 @@ export const courses = [
          title: "Java Backend Development",
         duration: "5 Months",
         batch: "Upcoming",
-        price: "₹40,000",
-        oldPrice: "₹50,000",
+        price: "₹15,000",
+        oldPrice: "₹25,000",
         description:
             "Master core Java, OOPs, JDBC, and Spring Boot. Build REST APIs and real-time backend applications with industry projects.",
         rating: 4.9,
@@ -253,8 +253,8 @@ export const courses = [
         title: "MERN Stack Development",
         duration: "6 Months",
         batch: "Running",
-        price: "₹35,500",
-        oldPrice: "₹45,000",
+        price: "₹25,500",
+        oldPrice: "₹35,000",
         description:
             "Master MongoDB, Express.js, React, and Node.js. Build full-stack web apps from scratch and get placement support.",
         rating: 4.8,
@@ -303,8 +303,8 @@ export const courses = [
         title: "Python Development",
         duration: "5 Months",
         batch: "Running",
-        price: "₹28,000",
-        oldPrice: "₹38,000",
+        price: "₹15,000",
+        oldPrice: "₹25,000",
         description:
             "Learn Python programming from basics to advanced. Build web apps, automation scripts, and data projects.",
         rating: 4.6,
