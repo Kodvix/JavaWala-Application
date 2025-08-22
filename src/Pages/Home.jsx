@@ -61,19 +61,7 @@ export default function Home() {
         }
     };
 
-    // Features scroll functions
-    // const scrollFeaturesLeft = () => {
-    //     if (featuresScrollRef.current) {
-    //         featuresScrollRef.current.scrollBy({ left: -280, behavior: "smooth" });
-    //     }
-    // };
-
-    // const scrollFeaturesRight = () => {
-    //     if (featuresScrollRef.current) {
-    //         featuresScrollRef.current.scrollBy({ left: 280, behavior: "smooth" });
-    //     }
-    // };
-
+    
     useEffect(() => {
         if (location.hash === "#courses") {
             const section = document.getElementById("courses");
@@ -388,29 +376,29 @@ export default function Home() {
                     {/* Placement History Section */}
                     <section className="bg-white py-3 px-4 sm:px-6 md:px-6 lg:px-8">
                         <h2 className="text-3xl font-bold text-center mb-12 text-blue-600">
-                            Placement History
+                            Placement Process
                         </h2>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
                             {[
                                 {
                                     icon: <FaUsers />,
-                                    title: "500+ Students Placed",
-                                    description: "Across top MNCs and product-based companies.",
+                                    title: "Connect with us",
+                                    description: "Join our community and get personalized course recommendations.",
                                     bg: "bg-green-100",
                                     text: "text-green-800",
                                 },
                                 {
                                     icon: <FaClipboardCheck />,
-                                    title: "100% Placement Assistance",
-                                    description: "From resume to referrals and mock interviews.",
+                                    title: "Enroll Our Courses",
+                                    description: "Become expertise in your field & Job ready with 100% placement assistant",
                                     bg: "bg-blue-100",
                                     text: "text-blue-800",
                                 },
                                 {
                                     icon: <FaTrophy />,
-                                    title: "Real Alumni Success",
-                                    description: "Our students are now working at TCS, Infosys, Capgemini & more.",
+                                    title: "Get a Job offer ",
+                                    description: "Get a job offer in top MNCs and product-based companies.",
                                     bg: "bg-yellow-100",
                                     text: "text-yellow-800",
                                 },
