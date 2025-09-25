@@ -1,71 +1,97 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect } from "react";
+import { FaUser } from "react-icons/fa";
 import { successStories } from "../Data/studentSuccessData";
-import { FaUserGraduate, FaUserTie, FaUserNinja, FaStar, FaStarHalfAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-
-const profileIcons = [FaUserGraduate, FaUserTie, FaUserNinja]; // Add more if needed
+import Footer from "../components/Footer";
+import Form from "../components/Form";
 
 export default function SuccessStories() {
-    const navigate = useNavigate();
-    const handleJoinNow = () => {
-        navigate("/contact");
-    }
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     return (
-        <div className="bg-gradient-to-br from-black via-gray-900 to-black text-white min-h-screen py-16 px-4 md:px-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-cyan-300 animate-pulse">
-                 Success Stories from Javawala
-            </h2>
+        <div className="bg-white text-gray-800 min-h-screen">
+            {/* Hero Section */}
+            <section
+                className="relative w-full h-[70vh] flex items-center justify-start text-left"
+                style={{
+                    backgroundImage: `url('/src/assets/assetshero.jpeg')`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "top center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundAttachment: "fixed",
+                }}
+            >
+                <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+                <div className="relative z-10 max-w-3xl px-4 sm:px-8 md:px-12 lg:px-20">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug">
+                        "These success stories didn’t start with confidence — they started
+                        with curiosity, late-night errors, and the will to keep going. Line
+                        by line, they built their future in code."
+                    </h1>
+                    <p className="mt-4 text-lg text-white">— Vedansh Naik</p>
+                </div>
+            </section>
 
-            <div className="space-y-12">
-                {successStories.map((student, index) => {
-                    const Icon = profileIcons[index % profileIcons.length];
-                    return (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, delay: index * 0.2 }}
-                            viewport={{ once: true }}
-                            className="flex flex-col md:flex-row items-center bg-white/10 p-6 rounded-xl shadow-lg backdrop-blur-md border border-white/20 gap-8"
-                        >
-                            {/* Icon Side */}
-                            <div className="text-cyan-300 text-7xl">
-                                <Icon />
-                            </div>
+            {/* Stories Section */}
+            <div className="py-12 md:py-16 px-4 md:px-20">
+                <h2 className="text-3xl md:text-5xl font-bold text-center mb-12 text-gray-900">
+                    Stories
+                </h2>
 
-                            {/* Content Side */}
-                            <div>
-                                <h3 className="text-2xl font-semibold text-cyan-200">{student.name}</h3>
-                                <p className="text-sm text-gray-300">{student.course}</p>
-                                <p className="mt-1 text-sm text-yellow-400 font-semibold">
-                                    Placed as: {student.role}
-                                </p>
-                                {/* Rating */}
-                                <div className="flex text-yellow-400 mt-2">
-                                    {[...Array(4)].map((_, i) => (
-                                        <FaStar key={i} />
-                                    ))}
-                                    <FaStarHalfAlt />
+                <div className="space-y-8 max-w-4xl mx-auto">
+                    {successStories.map((student, index) => {
+                        return (
+                            <div
+                                key={index}
+                                className="flex flex-col md:flex-row items-center bg-white p-6 rounded-lg shadow-md border border-gray-200 gap-4 md:gap-8"
+                            >
+                                {/* Icon Side */}
+                                <div className="flex items-center justify-center w-24 h-24 md:w-40 md:h-40 rounded-full bg-blue-100 shadow-lg">
+                                    <FaUser className="text-5xl md:text-7xl text-blue-600" />
                                 </div>
-                                {/* Testimonial */}
-                                <p className="mt-4 italic text-gray-300 text-sm max-w-xl">
-                                    “{student.testimonial}”
-                                </p>
+
+                                {/* Content Side */}
+                                <div className="text-center md:text-left">
+                                    <p className="italic text-gray-600 text-md max-w-xl">
+                                        “{student.testimonial}”
+                                    </p>
+                                    <h3 className="text-xl font-semibold text-gray-800 mt-4">
+                                        — {student.name}
+                                    </h3>
+                                    <p className="text-sm text-gray-500">
+                                        {student.course}
+                                    </p>
+                                </div>
                             </div>
-                        </motion.div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
 
-            <div className="text-center mt-16">
-                <p className="text-xl text-white font-medium">
-                     You could be our next success story!
-                </p>
-                <button onClick={handleJoinNow} className="mt-4 px-6 py-3 bg-cyan-500 hover:bg-cyan-600 rounded-lg text-white font-semibold transition duration-300">
-                    Join Javawala Today
-                </button>
-            </div>
+            {/* Contact Section */}
+            <section className="bg-blue-500 py-12 md:py-16 mb-[-21px]">
+                <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                    {/* Left Side */}
+                    <div className="text-white text-center md:text-left">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                            Need help getting started?
+                        </h2>
+                        <p className="text-lg">
+                            Your dreams are valid, let's make them happen together.
+                        </p>
+                    </div>
+
+                    {/* Right Side (Form) */}
+                    <div>
+                        <Form />
+                    </div>
+                </div>
+            </section>
+
+            {/* Footer */}
+            <footer>
+                <Footer />
+            </footer>
         </div>
     );
 }

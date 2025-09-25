@@ -1,79 +1,36 @@
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 import { courses } from "../Data/courses";
-import { motion, AnimatePresence,  } from "framer-motion";
-import { FaChevronDown, FaChalkboardTeacher, FaProjectDiagram, FaUserTie, FaHeadset } from "react-icons/fa";
-import { FaInfinity,  FaStar, FaComments } from "react-icons/fa";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import rocketImg from "../assets/rocketimg.gif"; // or .svg
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import {
+    FaChevronDown,
+    FaChalkboardTeacher,
+    FaProjectDiagram,
+    FaUserTie,
+    FaHeadset,
+} from "react-icons/fa";
 import girl1 from "../assets/girlll1.jpg";
 import girl2 from "../assets/girll2 (2).jpg";
 import girl3 from "../assets/girll3.jpg";
 import girl4 from "../assets/girll4.jpg";
-import { successStories } from "../Data/studentSuccessData"; 
-import { FaUserCircle, FaUserAlt,  FaRegUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
-const profileIcons = [FaUserCircle, FaUserAlt, FaUserTie, FaRegUser];
-
+import Footer from "../components/Footer";
 
 export default function CourseDetail() {
     const { id } = useParams();
-    const course = courses.find((c) => c.id === id);
-    const [activeTab, setActiveTab] = useState("whyUs");
-    const [openCardIndex, setOpenCardIndex] = useState(null);
-    const [openModuleIndex, setOpenModuleIndex] = useState(null);
+    const navigate = useNavigate();
 
-    const containerRef = useRef(null);
-    const journeySectionRef = useRef(null);
-    const [isJourneySectionVisible, setIsJourneySectionVisible] = useState(false);
-    const [rocketAnimationComplete, setRocketAnimationComplete] = useState(false);
-
-    
-
-    // Track when journey section is in view
-    const isJourneyInView = useInView(journeySectionRef, {
-        threshold: 0.3,
-        triggerOnce: false 
-        
-    });
-
-    
     useEffect(() => {
-        if (activeTab === "whyUs" && isJourneyInView) {
-            setIsJourneySectionVisible(true);
-            setRocketAnimationComplete(false);
-        } else if (activeTab !== "whyUs") {
-            setIsJourneySectionVisible(false);
-            setRocketAnimationComplete(false);
-        } else if (activeTab === "whyUs" && !isJourneyInView) {
-            setIsJourneySectionVisible(false);
-        }
-    }, [activeTab, isJourneyInView]);
-
-    // Reset animation on page reload or when component mounts
-    useEffect(() => {
-        setRocketAnimationComplete(false);
-        setIsJourneySectionVisible(false);
+        window.scrollTo(0, 0);
     }, []);
 
-    // Dynamically calculate the rocket's path based on container height
-    const [containerHeight, setContainerHeight] = useState(0);
-    useEffect(() => {
-        if (containerRef.current) {
-            setContainerHeight(containerRef.current.offsetHeight);
-        }
-    }, [activeTab]);
+    const course = courses.find((c) => c.id === id);
+    const [activeTab, setActiveTab] = useState("whyUs");
+    const [openModuleIndex, setOpenModuleIndex] = useState(null);
 
-    // Move rocket from bottom to top (reverse direction)
-   // const rocketHeight = 64; // px, matches w-16 h-16
-    
+    const journeySectionRef = useRef(null);
 
-    if (!course) return <div className="p-4 text-red-600">Course not found.</div>;
-
-    const toggleCard = (index) => {
-        setOpenCardIndex(openCardIndex === index ? null : index);
-    };
+    if (!course)
+        return <div className="p-4 text-red-600">Course not found.</div>;
 
     const toggleModule = (index) => {
         setOpenModuleIndex(openModuleIndex === index ? null : index);
@@ -82,26 +39,22 @@ export default function CourseDetail() {
     const journeySteps = [
         {
             title: "Level 1 - Beginner",
-            desc: "Start your journey with coding basics,like HTML,CSS,JS , logic building, and essential tools like Git, VS Code, etc.",
-            icon: "",
+            desc: "Start your journey with coding basics, like HTML, CSS, JS, logic building, and essential tools like Git, VS Code, etc.",
             img: girl1,
         },
         {
             title: "Level 2 - Intermediate",
             desc: "Build real-world projects, enhance your resume and GitHub profile, and attend mock interviews.",
-            icon: "",
             img: girl2,
         },
         {
             title: "Level 3 - Advanced",
             desc: "Learn system design, DSA, crack interviews, and apply for internships.",
-            icon: "",
             img: girl3,
         },
         {
             title: "Level 4 - Placement",
             desc: "You're now fully equipped to secure your dream job or internship in top tech companies.",
-            icon: "",
             img: girl4,
         },
     ];
@@ -109,84 +62,151 @@ export default function CourseDetail() {
     const whyUsFeatures = [
         {
             title: "Industry-expert trainers with real-world experience",
-            details: "Get mentored by professionals who've worked in top MNCs and bring real-time problem-solving techniques into your learning.",
+            details:
+                "Get mentored by professionals who've worked in top MNCs and bring real-time problem-solving techniques into your learning.",
             icon: <FaChalkboardTeacher className="text-4xl text-orange-500" />,
         },
         {
             title: "Hands-on live projects & case studies",
-            details: "Work on live projects that simulate real company environments, preparing you for actual on-job expectations.",
+            details:
+                "Work on live projects that simulate real company environments, preparing you for actual on-job expectations.",
             icon: <FaProjectDiagram className="text-4xl text-green-500" />,
         },
         {
             title: "1:1 mentorship and career support",
-            details: "Get personalized career guidance and resume reviews from industry experts to ensure job readiness.",
+            details:
+                "Get personalized career guidance and resume reviews from industry experts to ensure job readiness.",
             icon: <FaUserTie className="text-4xl text-blue-500" />,
         },
         {
             title: "24/7 doubt-clearing & tech support",
-            details: "Dedicated support teams and mentors available around the clock to help you tackle challenges instantly.",
+            details:
+                "Dedicated support teams and mentors available around the clock to help you tackle challenges instantly.",
             icon: <FaHeadset className="text-4xl text-purple-500" />,
         },
     ];
 
-    
+    const actionContent = [
+        {
+            title: "Foundation Building",
+            actions: [
+                "Interactive coding workshops",
+                "Hands-on project development",
+                "Industry-standard tool training",
+                "Personalized learning path"
+            ],
+            icon: "🚀",
+            gradient: "from-blue-500 to-cyan-400"
+        },
+        {
+            title: "Skill Enhancement",
+            actions: [
+                "Real company project simulation",
+                "Portfolio optimization",
+                "Technical interview preparation",
+                "Industry mentor guidance"
+            ],
+            icon: "💡",
+            gradient: "from-purple-500 to-pink-400"
+        },
+        {
+            title: "Professional Preparation",
+            actions: [
+                "Advanced system architecture",
+                "Competitive coding practice",
+                "Mock interview sessions",
+                "Industry networking events"
+            ],
+            icon: "🎯",
+            gradient: "from-orange-500 to-red-400"
+        },
+        {
+            title: "Career Launch",
+            actions: [
+                "Job application strategy",
+                "Salary negotiation coaching",
+                "Continuous career support",
+                "Alumni network access"
+            ],
+            icon: "👑",
+            gradient: "from-green-500 to-emerald-400"
+        }
+    ];
+
     return (
-        <div className="p-6 max-w-6xl mx-auto mt-[10px] bg-black">
-            {/* 🟦 Course Header */}
+        <div className="w-full">
+            {/* Hero Section */}
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="bg-[black] shadow-lg rounded-3xl p-6 mb-10 border flex flex-col md:flex-row gap-6"
+                className="relative w-full h-[320px] sm:h-[380px] md:h-[460px] overflow-hidden"
+                style={{
+                    backgroundImage: `url(${course.image2 || course.image})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                }}
             >
-                <div className="w-full md:w-1/2 flex justify-center items-center r">
-                    <img
-                        src={course.image}
-                        alt={course.title}
-                        className="w-4/5 sm:w-3/4 md:w-full h-48 sm:h-60 md:h-64 object-contain rounded-3xl"
-                    />
-                </div>
+                {/* Dark + blur overlay only on small screens */}
+                <div className="absolute inset-0 bg-black/50 backdrop-blur-sm sm:bg-black/30 sm:backdrop-blur-none md:bg-transparent"></div>
 
-                <div className="flex-1">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">{course.title}</h2>
-                    <p className="text-[#FBE4D6] text-sm sm:text-base mb-4">{course.description}</p>
-                    <div className="flex flex-wrap items-center gap-4 mt-4">
-                        <span className="text-lg font-semibold text-green-600">{course.price}</span>
-                        <span className="text-sm text-gray-500">Duration: {course.duration}</span>
+                <div className="relative h-full flex items-center px-4 sm:px-8 md:px-12">
+                    <div className="p-5 sm:p-6 md:p-8 max-w-[33rem]">
+                        <h1 className="text-3xl sm:text-3xl md:text-4xl font-extrabold text-white sm:text-white leading-tight">
+                            {course.title}
+                        </h1>
+                        <p className="text-white sm:text-white text-sm sm:text-base mt-3">
+                            {course.description}
+                        </p>
+                        <div className="mt-4 flex items-baseline gap-3">
+                            {course.oldPrice && (
+                                <span className="text-gray-300 sm:text-gray-500 line-through text-sm sm:text-base">
+                                    {course.oldPrice}
+                                </span>
+                            )}
+                            <span className="text-2xl sm:text-3xl font-bold text-white sm:text-white">
+                                {course.price}
+                            </span>
+                        </div>
+                        <div className="mt-2 text-white sm:text-white text-sm sm:text-base">
+                            <span className="font-semibold">Duration:</span> {course.duration}
+                        </div>
+                        <button
+                            onClick={() => navigate("/contact", { state: { focus: true } })}
+                            className="mt-5 px-5 py-2.5 bg-[#EF7722] text-white rounded-md hover:bg-blue-700 transition"
+                        >
+                            Enroll Now
+                        </button>
                     </div>
-                    <Link to="/contact">
-
-                    <button className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-                        Enroll Now
-                    </button>
-                    </Link>
-
                 </div>
             </motion.div>
-            {/* 🔘 Tabs */}
-            <div className="flex space-x-0 sm:space-x-2 border-b mb-6">
 
-                {["whyUs", "offer", "perks", "modules"].map((tab) => (
-                    <button
-                        key={tab}
-                        className={`px-4 py-2 font-medium capitalize ${activeTab === tab
-                            ? "border-b-2 border-blue-600 text-blue-700"
-                            : "text-[#FBE4D6] hover:text-blue-700"
-                            }`}
-                        onClick={() => setActiveTab(tab)}
-                    >
-                        {tab === "whyUs" && "Why Us"}
-                        {tab === "offer" && "What You Get"}
-                        {tab === "perks" && "Perks"}
-                        {tab === "modules" && "Curriculum"}
-                    </button>
-                ))}
+            {/* Tabs */}
+            <div className="w-full flex justify-center py-4">
+                <div className="w-[90%] sm:w-[80%] lg:w-[70%]">
+                    <div className="grid grid-cols-3 w-full mb-6 border-b">
+                        {["whyUs", "offer", "modules"].map((tab) => (
+                            <button
+                                key={tab}
+                                className={`px-4 py-2 capitalize text-center ${activeTab === tab
+                                    ? "border-b-4 border-blue-500 text-blue-700"
+                                    : "text-gray-600 hover:text-blue-600 hover:bg-blue-25"
+                                    }`}
+                                onClick={() => setActiveTab(tab)}
+                            >
+                                {tab === "whyUs" && "Why Us"}
+                                {tab === "offer" && "What You Get"}
+                                {tab === "modules" && "Curriculum"}
+                            </button>
+                        ))}
+                    </div>
+                </div>
             </div>
 
-            {/* 🔻 Tab Content */}
+            {/* Tab Content */}
             <div className="relative min-h-[300px]">
                 <AnimatePresence mode="wait">
-                    {/* WHY US TAB */}
+                    {/* Why Us Tab */}
                     {activeTab === "whyUs" && (
                         <motion.div
                             key="whyUs"
@@ -196,170 +216,201 @@ export default function CourseDetail() {
                             transition={{ duration: 0.4 }}
                             className="space-y-10"
                         >
-                            {/* Expandable Cards with Icons */}
-                            <div className="grid gap-6 md:grid-cols-2">
-                                {whyUsFeatures.map((item, idx) => {
-                                    const isOpen = openCardIndex === idx;
-                                    return (
-                                        <div
-                                            key={idx}
-                                            className="bg-[#FAF9EE] shadow border rounded-xl hover:shadow-md transition duration-300 overflow-hidden"
-                                        >
-                                            <div className="flex p-4">
-                                                <div className="w-1/4 flex items-center justify-center">
-                                                    {item.icon}
-                                                </div>
-                                                <div className="w-3/4 flex flex-col justify-center">
-                                                    <div
-                                                        onClick={() => toggleCard(idx)}
-                                                        className="flex items-center justify-between cursor-pointer w-full gap-2"
-                                                    >
-                                                        <p className="text-gray-800 font-semibold text-base md:text-lg truncate">
-                                                            {item.title}
-                                                        </p>
-                                                        <motion.div
-                                                            animate={{ rotate: isOpen ? 180 : 0 }}
-                                                            transition={{ duration: 0.3 }}
-                                                            className="shrink-0"
-                                                        >
-                                                            <FaChevronDown className="text-gray-500" />
-                                                        </motion.div>
-                                                    </div>
-
-
-                                                    <AnimatePresence>
-                                                        {isOpen && (
-                                                            <motion.div
-                                                                initial={{ height: 0, opacity: 0 }}
-                                                                animate={{ height: "auto", opacity: 1 }}
-                                                                exit={{ height: 0, opacity: 0 }}
-                                                                transition={{ duration: 0.4 }}
-                                                                className="mt-2 text-gray-600 text-sm overflow-hidden"
-                                                            >
-                                                                <p>{item.details}</p>
-                                                            </motion.div>
-                                                        )}
-                                                    </AnimatePresence>
-                                                </div>
+                            {/* Features */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-[20px]">
+                                {whyUsFeatures.map((item, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-6 hover:shadow-lg hover:from-blue-100 hover:to-blue-150 transition-all duration-300"
+                                    >
+                                        <div className="flex items-start gap-3">
+                                            <div className="shrink-0 text-blue-600 text-xl">
+                                                {item.icon}
+                                            </div>
+                                            <div>
+                                                <h3 className="text-blue-900 font-semibold text-lg md:text-xl">
+                                                    {item.title}
+                                                </h3>
+                                                <p className="text-blue-700 text-sm md:text-base mt-2">
+                                                    {item.details}
+                                                </p>
                                             </div>
                                         </div>
-                                    );
-                                })}
+                                    </div>
+                                ))}
                             </div>
 
-                            {/* Mentor Section */}
-                            <div>
-                                <h3 className="text-2xl font-semibold mb-4 text-blue-700 text-center">
-                                    Ratings and Reviews
-                                </h3>
-
-                                <div className="flex sm:flex-wrap flex-nowrap overflow-x-auto sm:justify-center gap-6 pb-4 px-2">
-                                    {successStories.map((story, idx) => {
-                                        const ProfileIcon = profileIcons[idx % profileIcons.length]; // Rotate icons
-                                        return (
-                                            <div
-                                                key={idx}
-                                                className="w-52 min-w-[13rem] p-4 bg-[#FAF9EE] rounded-lg shadow hover:shadow-md transition shrink-0"
-                                            >
-                                                <div className="flex justify-center">
-                                                    <ProfileIcon className="text-6xl text-blue-600" />
-                                                </div>
-                                                <h4 className="text-center mt-3 font-semibold">{story.name}</h4>
-                                                <p className="text-center text-sm text-gray-500">{story.role}</p>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-
-                            {/* Placement Journey Section */}
-                            <div className="relative bg-[#FAF9EE] py-10 md:py-20 overflow-hidden rounded-3xl" ref={containerRef}>
+                            {/* Enhanced Placement Journey */}
+                            <div className="relative py-16 md:py-[2rem] mx-auto max-w-7xl px-4">
                                 <div ref={journeySectionRef}>
-                                    <h2 className="text-3xl md:text-4xl font-bold text-green-700 text-center mb-12 md:mb-16">
-                                        Placement Journey
-                                    </h2>
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8 }}
+                                        viewport={{ once: true }}
+                                        className="text-center mb-16"
+                                    >
+                                        <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
+                                            Your Journey to Success
+                                        </h2>
+                                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                                            A carefully crafted roadmap that transforms beginners into industry-ready professionals
+                                        </p>
+                                    </motion.div>
 
-                                    {/* Center Rocket Path */}
-                                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-t from-green-300 via-orange-300 to-pink-300 z-10"></div>
-
-                                    {/* Rocket Animation */}
-                                    <AnimatePresence>
-                                        {isJourneySectionVisible && (
-                                            <motion.div
-                                                initial={{ y: Math.max(0, containerHeight - 128), opacity: 1 }}
-                                                animate={{ y: -32, opacity: rocketAnimationComplete ? 0 : 1 }}
-                                                transition={{
-                                                    duration: 4,
-                                                    ease: "easeInOut",
-                                                    opacity: {
-                                                        duration: rocketAnimationComplete ? 0.5 : 4,
-                                                        delay: rocketAnimationComplete ? 0 : 3.5,
-                                                    },
-                                                }}
-                                                onAnimationComplete={() => {
-                                                    if (!rocketAnimationComplete) {
-                                                        setRocketAnimationComplete(true);
-                                                    }
-                                                }}
-                                                className="absolute left-1/2 -translate-x-1/2 top-0 z-20"
-                                            >
-                                                <motion.img
-                                                    src={rocketImg}
-                                                    alt="Rocket"
-                                                    className="w-12 h-12 md:w-16 md:h-16"
-                                                    animate={{
-                                                        rotate: [0, 5, -5, 0],
-                                                        scale: [1, 1.05, 1],
-                                                    }}
-                                                    transition={{
-                                                        duration: 0.8,
-                                                        repeat: Infinity,
-                                                        repeatType: "reverse",
-                                                    }}
-                                                />
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-
-                                    {/* Journey Steps */}
-                                    <div className="relative z-10 space-y-14 md:space-y-24">
+                                    <div className="space-y-20">
                                         {journeySteps.map((step, idx) => {
                                             const isEven = idx % 2 === 0;
+                                            const currentActionContent = actionContent[idx];
+
                                             return (
                                                 <motion.div
                                                     key={idx}
-                                                    initial={{ x: isEven ? -200 : 200, opacity: 0 }}
-                                                    whileInView={{ x: 0, opacity: 1 }}
+                                                    initial={{ opacity: 0, y: 50 }}
+                                                    whileInView={{ opacity: 1, y: 0 }}
                                                     transition={{ duration: 0.8, delay: idx * 0.2 }}
-                                                    viewport={{ once: false }}
-                                                    className={`flex flex-col md:flex-row items-center px-4 md:px-20 ${!isEven ? "md:flex-row-reverse" : ""} gap-8 md:gap-16`}
+                                                    viewport={{ once: true }}
+                                                    className="relative"
                                                 >
-                                                    <div className="w-full md:w-1/2 h-52 sm:h-64 md:h-[350px] flex items-center justify-center">
-                                                        <img
-                                                            src={step.img}
-                                                            alt={step.title}
-                                                            className="w-full h-full object-contain rounded-xl shadow-lg border bg-white"
-                                                        />
-                                                    </div>
+                                                    {/* Connection Line */}
+                                                    {idx < journeySteps.length - 1 && (
+                                                        <div className="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-10 z-10">
+                                                            <motion.div
+                                                                initial={{ scaleY: 0 }}
+                                                                whileInView={{ scaleY: 1 }}
+                                                                transition={{ duration: 0.8, delay: (idx * 0.2) + 0.5 }}
+                                                                viewport={{ once: true }}
+                                                                className="w-1 h-10 bg-gradient-to-b from-gray-300 to-gray-400 origin-top"
+                                                            />
+                                                        </div>
+                                                    )}
 
-                                                    <div className="w-full md:w-1/2 bg-gradient-to-r from-orange-50 to-yellow-100 p-4 md:p-6 rounded-xl border shadow">
-                                                        <div className="text-3xl md:text-4xl mb-2">{step.icon}</div>
-                                                        <h4 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">{step.title}</h4>
-                                                        <p className="text-gray-600 text-sm md:text-base leading-relaxed">{step.desc}</p>
+                                                    <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center ${isEven ? 'lg:grid-cols-2' : 'lg:grid-cols-2'
+                                                        }`}>
+                                                        {/* Step Card */}
+                                                        <motion.div
+                                                            whileHover={{ scale: 1.02, y: -5 }}
+                                                            transition={{ duration: 0.3 }}
+                                                            className={`relative group ${isEven ? 'lg:order-1' : 'lg:order-2'}`}
+                                                        >
+                                                            {/* Floating Elements */}
+                                                            <div className="absolute -top-2 -right-2 w-20 h-20 bg-gradient-to-r from-blue-200 to-purple-200 rounded-full opacity-60 group-hover:scale-110 transition-transform duration-300" />
+                                                            <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-gradient-to-r from-pink-200 to-orange-200 rounded-full opacity-50 group-hover:scale-110 transition-transform duration-300" />
+
+                                                            <div className="relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
+                                                                {/* Card Header */}
+                                                                <div className={`h-2 bg-gradient-to-r ${currentActionContent.gradient}`} />
+
+                                                                <div className="p-8">
+                                                                    {/* Step Number */}
+                                                                    <div className="flex items-center gap-4 mb-6">
+                                                                        <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${currentActionContent.gradient} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
+                                                                            {idx + 1}
+                                                                        </div>
+                                                                        <div className="h-px flex-1 bg-gradient-to-r from-gray-300 to-transparent" />
+                                                                    </div>
+
+                                                                    {/* Image */}
+                                                                    <div className="relative mb-6 group-hover:scale-105 transition-transform duration-300 flex justify-center items-center">
+                                                                        <img
+                                                                            src={step.img}
+                                                                            alt={step.title}
+                                                                            className="w-full max-h-64 object-contain rounded-xl shadow-md bg-white"
+                                                                            style={{ background: '#fff' }}
+                                                                        />
+                                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl pointer-events-none" />
+                                                                    </div>
+
+                                                                    {/* Content */}
+                                                                    <h4 className="text-2xl font-bold text-gray-800 mb-3">
+                                                                        {step.title}
+                                                                    </h4>
+                                                                    <p className="text-gray-600 leading-relaxed">
+                                                                        {step.desc}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </motion.div>
+
+                                                        {/* Action Content */}
+                                                        <motion.div
+                                                            initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                                                            whileInView={{ opacity: 1, x: 0 }}
+                                                            transition={{ duration: 0.8, delay: (idx * 0.2) + 0.3 }}
+                                                            viewport={{ once: true }}
+                                                            className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}
+                                                        >
+                                                            <div className="relative">
+                                                                {/* Background Decoration */}
+                                                                <div className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full opacity-60" />
+
+                                                                <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-lg border border-gray-200">
+                                                                    {/* Header */}
+                                                                    <div className="flex items-center gap-4 mb-6">
+                                                                        <div className="text-4xl">{currentActionContent.icon}</div>
+                                                                        <div>
+                                                                            <h3 className="text-2xl font-bold text-gray-800">
+                                                                                {currentActionContent.title}
+                                                                            </h3>
+                                                                            <p className="text-gray-600">What we focus on</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    {/* Action Items */}
+                                                                    <div className="space-y-4">
+                                                                        {currentActionContent.actions.map((action, actionIdx) => (
+                                                                            <motion.div
+                                                                                key={actionIdx}
+                                                                                initial={{ opacity: 0, x: -20 }}
+                                                                                whileInView={{ opacity: 1, x: 0 }}
+                                                                                transition={{
+                                                                                    duration: 0.5,
+                                                                                    delay: (idx * 0.2) + 0.5 + (actionIdx * 0.1)
+                                                                                }}
+                                                                                viewport={{ once: true }}
+                                                                                className="flex items-center gap-4 p-3 rounded-xl bg-white shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
+                                                                            >
+                                                                                <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${currentActionContent.gradient}`} />
+                                                                                <span className="text-gray-700 font-medium">
+                                                                                    {action}
+                                                                                </span>
+                                                                            </motion.div>
+                                                                        ))}
+                                                                    </div>
+
+                                                                    {/* Progress Indicator */}
+                                                                    <div className="mt-6 pt-6 border-t border-gray-200">
+                                                                        <div className="flex items-center justify-between text-sm text-gray-500 mb-2">
+                                                                            <span>Progress</span>
+                                                                            <span>{Math.round(((idx + 1) / journeySteps.length) * 100)}%</span>
+                                                                        </div>
+                                                                        <div className="w-full bg-gray-200 rounded-full h-2">
+                                                                            <motion.div
+                                                                                initial={{ width: 0 }}
+                                                                                whileInView={{ width: `${((idx + 1) / journeySteps.length) * 100}%` }}
+                                                                                transition={{ duration: 1, delay: (idx * 0.2) + 0.8 }}
+                                                                                viewport={{ once: true }}
+                                                                                className={`h-2 bg-gradient-to-r ${currentActionContent.gradient} rounded-full`}
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </motion.div>
                                                     </div>
                                                 </motion.div>
                                             );
                                         })}
                                     </div>
+
+                                    {/* Success Metrics */}
+
                                 </div>
                             </div>
-
-
-
                         </motion.div>
                     )}
 
-                    {/* OFFER TAB */}
+                    {/* Offer Tab */}
                     {activeTab === "offer" && (
                         <motion.div
                             key="offer"
@@ -367,22 +418,19 @@ export default function CourseDetail() {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 30 }}
                             transition={{ duration: 0.4 }}
-                            className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start md:items-center"
+                            className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start md:items-center p-6"
                         >
-                            {/* Left Column */}
-                            <div className="space-y-4">
-                                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#FBE4D6]">
+                            <div className="space-y-4 pl-6">
+                                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-800">
                                     What We Offer
                                 </h3>
-                                <p className="text-[#FBE4D6] text-sm sm:text-base leading-relaxed">
-                                    Elevate your career with our comprehensive training and placement
-                                    programs. From professional certifications to guaranteed internships,
-                                    we ensure you get the skills, experience, and support you need to
-                                    succeed.
+                                <p className="text-blue-700 text-sm sm:text-base leading-relaxed">
+                                    Elevate your career with our comprehensive training and
+                                    placement programs. From professional certifications to
+                                    guaranteed internships, we ensure you get the skills,
+                                    experience, and support you need to succeed.
                                 </p>
                             </div>
-
-                            {/* Right Column */}
                             <div className="space-y-4">
                                 {[
                                     "Professional Certification on Completion",
@@ -392,12 +440,12 @@ export default function CourseDetail() {
                                 ].map((item, idx) => (
                                     <button
                                         key={idx}
-                                        className="group w-full text-left p-3 sm:p-4 border border-gray-200 rounded-xl bg-gradient-to-r from-green-50 to-green-100 hover:shadow-md transition flex items-start sm:items-center space-x-3"
+                                        className="group w-full text-left p-3 sm:p-4 border border-blue-200 rounded-xl bg-gradient-to-r from-blue-50 to-blue-100 hover:shadow-lg hover:from-blue-100 hover:to-blue-150 transition-all duration-300 flex items-start sm:items-center space-x-3"
                                     >
-                                        <div className="text-green-600 text-lg sm:text-xl group-hover:scale-110 transition">
+                                        <div className="text-blue-600 text-lg sm:text-xl group-hover:scale-110 transition">
                                             ✅
                                         </div>
-                                        <span className="text-gray-800 text-sm sm:text-base font-medium">
+                                        <span className="text-blue-800 text-sm sm:text-base font-medium">
                                             {item}
                                         </span>
                                     </button>
@@ -406,48 +454,7 @@ export default function CourseDetail() {
                         </motion.div>
                     )}
 
-
-                    {/* PERKS TAB */}
-                    {activeTab === "perks" && (
-                        <motion.div
-                            key="perks"
-                            initial={{ opacity: 0, x: -30 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 30 }}
-                            transition={{ duration: 0.4 }}
-                            className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full"
-                        >
-                            {[
-                                {
-                                    icon: <FaInfinity className="text-purple-600 text-2xl sm:text-xl" />,
-                                    text: "Lifetime access to course materials",
-                                },
-                                {
-                                    icon: <FaComments className="text-purple-600 text-2xl sm:text-xl" />,
-                                    text: "Free career counseling sessions",
-                                },
-                                {
-                                    icon: <FaUserTie className="text-purple-600 text-2xl sm:text-xl" />,
-                                    text: "Soft skill & resume building training",
-                                },
-                                {
-                                    icon: <FaStar className="text-purple-600 text-2xl sm:text-xl" />,
-                                    text: "Top performer recognition & rewards",
-                                },
-                            ].map((item, idx) => (
-                                <div
-                                    key={idx}
-                                    className="bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-xl p-4 flex items-start gap-3 shadow hover:shadow-md transition"
-                                >
-                                    <div className="shrink-0">{item.icon}</div>
-                                    <p className="text-gray-700 text-sm sm:text-base">{item.text}</p>
-                                </div>
-                            ))}
-                        </motion.div>
-                    )}
-
-
-                    {/* MODULES/CURRICULUM TAB - Updated with Collapsible Sections */}
+                    {/* Modules Tab */}
                     {activeTab === "modules" && (
                         <motion.div
                             key="modules"
@@ -455,13 +462,15 @@ export default function CourseDetail() {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 30 }}
                             transition={{ duration: 0.4 }}
-                            className="space-y-6"
+                            className="px-4 sm:px-6 lg:px-8"
                         >
-                            <h3 className="text-3xl font-bold text-[#FBE4D6] mb-4">
+                            <h3 className="text-3xl font-bold text-blue-800 mb-4 text-center sm:text-left">
                                 {course.title} Curriculum
                             </h3>
-                            <p className="text-[#FBE4D6] mb-6">
-                                Comprehensive curriculum designed to take you from beginner to professional level. Each section builds upon the previous one to ensure solid understanding.
+                            <p className="text-blue-700 mb-6 text-center sm:text-left">
+                                Comprehensive curriculum designed to take you from beginner to
+                                professional level. Each section builds upon the previous one to
+                                ensure solid understanding.
                             </p>
 
                             {course.curriculum && course.curriculum.length > 0 ? (
@@ -472,22 +481,26 @@ export default function CourseDetail() {
                                             initial={{ opacity: 0, y: 20 }}
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true }}
-                                            transition={{ duration: 0.4, delay: sectionIdx * 0.1 }}
-                                            className="bg-white border border-blue-200 rounded-xl shadow hover:shadow-md transition overflow-hidden"
+                                            transition={{
+                                                duration: 0.4,
+                                                delay: sectionIdx * 0.1,
+                                            }}
+                                            className="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
                                         >
-                                            {/* Module Header - Clickable */}
                                             <div
                                                 onClick={() => toggleModule(sectionIdx)}
-                                                className="flex items-center justify-between p-6 cursor-pointer bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-150 transition-colors"
+                                                className="flex items-center justify-between p-6 cursor-pointer bg-gradient-to-r from-blue-100 to-blue-150 hover:from-blue-150 hover:to-blue-200 transition-all duration-300"
                                             >
                                                 <div className="flex items-center space-x-3">
                                                     <div className="text-blue-600 text-2xl">📚</div>
-                                                    <h4 className="text-xl font-semibold text-blue-700">
+                                                    <h4 className="text-xl font-semibold text-blue-800">
                                                         {section.section}
                                                     </h4>
                                                 </div>
                                                 <motion.div
-                                                    animate={{ rotate: openModuleIndex === sectionIdx ? 180 : 0 }}
+                                                    animate={{
+                                                        rotate: openModuleIndex === sectionIdx ? 180 : 0,
+                                                    }}
                                                     transition={{ duration: 0.3 }}
                                                     className="text-blue-600"
                                                 >
@@ -495,7 +508,6 @@ export default function CourseDetail() {
                                                 </motion.div>
                                             </div>
 
-                                            {/* Module Content - Collapsible */}
                                             <AnimatePresence>
                                                 {openModuleIndex === sectionIdx && (
                                                     <motion.div
@@ -512,11 +524,16 @@ export default function CourseDetail() {
                                                                         key={topicIdx}
                                                                         initial={{ opacity: 0, x: -20 }}
                                                                         animate={{ opacity: 1, x: 0 }}
-                                                                        transition={{ duration: 0.3, delay: topicIdx * 0.1 }}
-                                                                        className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors"
+                                                                        transition={{
+                                                                            duration: 0.3,
+                                                                            delay: topicIdx * 0.1,
+                                                                        }}
+                                                                        className="flex items-center space-x-3 bg-gradient-to-r from-blue-50 to-blue-100 p-3 rounded-lg border border-blue-200 hover:from-blue-100 hover:to-blue-150 transition-all duration-300"
                                                                     >
-                                                                        <div className="text-blue-500 text-sm">▸</div>
-                                                                        <span className="text-gray-700 font-medium text-sm">
+                                                                        <div className="text-blue-500 text-sm">
+                                                                            ▸
+                                                                        </div>
+                                                                        <span className="text-blue-800 font-medium text-sm">
                                                                             {topic}
                                                                         </span>
                                                                     </motion.div>
@@ -530,17 +547,14 @@ export default function CourseDetail() {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="text-center py-8">
-                                    <p className="text-gray-500">No curriculum available for this course yet.</p>
-                                </div>
+                                <p className="text-gray-600">Curriculum details not available.</p>
                             )}
                         </motion.div>
                     )}
-
                 </AnimatePresence>
             </div>
+
+            <Footer />
         </div>
     );
 }
-
-
