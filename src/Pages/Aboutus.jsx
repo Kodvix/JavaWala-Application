@@ -1,155 +1,143 @@
-import React, { useState } from "react";
-import { FaLaptopCode, FaChalkboardTeacher, FaBriefcase } from "react-icons/fa";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ContactForm from "../components/ContactForm";
+import Form from "../components/Form";
+import Footer from "../components/Footer";
+import cardbg from "../assets/cardbg.jpg";
 
-const features = [
+const paragraphs = [
+    "Learn from experienced professionals with real industry exposure. Our programs simulate real workflows, tools, and challenges to prepare you for real-world success.",
+    "Get hands-on internship experience with project-based certification. Work on live projects, collaborate with professionals, and boost your career profile.",
+    "Receive placement support, mock interviews, and MNC referrals. Build your portfolio and stand out with real project experience.",
+];
+
+const cardData = [
     {
-        title: "Expert-Led Training",
-        icon: <FaChalkboardTeacher className="text-4xl sm:text-5xl text-green-400" />,
-        description: "Learn from experienced professionals with real industry exposure.",
-        details:
-            "Our programs simulate real industry workflows, tools, and challenges for students and freshers."
+        title: "Hands-On Learning",
+        text: "Practical assignments and real-time projects that help you learn by doing.",
     },
     {
-        title: "Internship + Certification",
-        icon: <FaLaptopCode className="text-4xl sm:text-5xl text-blue-400" />,
-        description: "Hands-on internships with project-based certification.",
-        details:
-            "Work on live projects, collaborate with professionals, and receive internship letters & certificates."
+        title: "Mentorship",
+        text: "Get guided by industry professionals to accelerate your learning journey.",
     },
     {
-        title: "Job-Oriented Programs",
-        icon: <FaBriefcase className="text-4xl sm:text-5xl text-yellow-400" />,
-        description: "Placement support, mock interviews, and MNC referrals.",
-        details:
-            "Sharpen communication, build portfolios, and stand out with real project experience."
-    }
+        title: "Placement Prep",
+        text: "Mock interviews, referrals, and MNC connections to boost your career.",
+    },
 ];
 
 export default function AboutUs() {
-    const [flipped, setFlipped] = useState(Array(features.length).fill(false));
-
-    const toggleFlip = (index) => {
-        const updated = [...flipped];
-        updated[index] = !updated[index];
-        setFlipped(updated);
-    };
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
-        <div className="bg-[#C4E1E6] text-black px-4 sm:px-6 pt-10 pb-10 min-h-screen">
+        <div className="text-black min-h-screen w-full overflow-x-hidden">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="text-center max-w-4xl mx-auto mb-12"
+                className="text-center max-w-4xl mx-auto px-4 pt-12 mb-12"
             >
-                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold mb-4">About Javawala </h1>
-                <p className="text-[#254D70] text-base sm:text-lg">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-blue-600">
+                    About Javawala
+                </h1>
+                <p className="text-blue-700 text-base sm:text-lg">
                     Empowering you with skills in Java, Spring Boot, React, DevOps, and beyond.
                 </p>
             </motion.div>
 
-            {/* Features with horizontal scroll on mobile */}
-            <div className="overflow-x-auto sm:overflow-visible">
-                <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto sm:auto-cols-auto min-w-[640px] sm:min-w-0">
-                    {features.map((feature, index) => (
-                        <motion.div
-                            key={index}
-                            onClick={() => toggleFlip(index)}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: index * 0.2, duration: 0.5 }}
-                            className="relative h-80 sm:h-96 w-72 sm:w-auto flex-shrink-0 cursor-pointer group"
-                        >
-                            <div className={`flip-card ${flipped[index] ? "flipped" : ""}`}>
-                                <div className="flip-face absolute w-full h-full bg-[#1e1e1e]/90 rounded-xl flex flex-col items-center justify-center shadow-lg text-center p-4 space-y-3">
-                                    {feature.icon}
-                                    <h3 className="text-lg sm:text-xl font-bold text-white">{feature.title}</h3>
-                                    <p className="text-gray-300 text-sm">{feature.description}</p>
-                                    <p className="text-gray-400 text-xs mt-1">Tap to flip 🧱</p>
-                                </div>
-                                <div
-                                    className="flip-face absolute w-full h-full bg-[#A0C878]/90 rounded-xl p-4 flex flex-col justify-center items-center text-center shadow-lg"
-                                    style={{ transform: "rotateY(180deg)" }}
-                                >
-                                    <h3 className="text-lg sm:text-xl font-bold text-black mb-2">{feature.title}</h3>
-                                    <p className="text-black text-sm">{feature.details}</p>
-                                    <p className="text-black text-xs mt-2">Tap to flip back 🧱</p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+            {/* Paragraphs Section */}
+            <div className="px-6 sm:px-12 lg:px-20 max-w-4xl mx-auto space-y-1">
+                {paragraphs.map((text, index) => (
+                    <motion.p
+                        key={index}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.2, duration: 0.6 }}
+                        className="text-blue-900 text-base sm:text-lg leading-relaxed text-center"
+                    >
+                        {text}
+                    </motion.p>
+                ))}
             </div>
+
+            {/* Triangle Card Section */}
+            <section className="mt-20 px-6 sm:px-12 lg:px-20 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    {/* Left Big Card */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="relative rounded-2xl shadow-lg p-8 h-full flex flex-col justify-center overflow-hidden"
+                        style={{
+                            backgroundImage: `linear-gradient(rgba(37,99,235,0.85), rgba(59,130,246,0.7)), url(${cardbg})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                        }}
+                    >
+                        <h3 className="text-2xl font-bold mb-4 text-white drop-shadow">{cardData[0].title}</h3>
+                        <p className="text-white drop-shadow">{cardData[0].text}</p>
+                    </motion.div>
+
+                    {/* Right Side → Two stacked cards */}
+                    <div className="flex flex-col gap-10">
+                        {cardData.slice(1).map((card, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.6, delay: index * 0.2 }}
+                                className="bg-gradient-to-br from-blue-100 to-blue-200 text-blue-800 rounded-2xl shadow-lg p-6"
+                            >
+                                <h3 className="text-xl font-semibold mb-3">{card.title}</h3>
+                                <p>{card.text}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
 
             {/* Contact Section */}
-            <div
-                className="mt-20 bg-cover bg-center bg-no-repeat py-16 sm:py-20 px-4"
-                style={{
-                    backgroundImage: `url('https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1400&q=80')`,
-                    backgroundAttachment: "fixed"
-                }}
-            >
-                <div className="bg-black/70 rounded-xl max-w-4xl mx-auto p-6 sm:p-8 shadow-xl">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-4">Let's Connect 📬</h2>
-                    <p className="text-center text-gray-300 mb-6">
-                        Want to enroll or learn more? Drop us a message below.
-                    </p>
-                    <ContactForm />
-                </div>
-            </div>
 
-            {/* Why Javawala */}
-            <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="max-w-4xl mx-auto mt-16 bg-[#1a1a1a] p-5 sm:p-6 rounded-xl text-gray-200"
-            >
-                <h2 className="text-xl sm:text-2xl font-semibold text-green-400 mb-3">Why Choose Javawala?</h2>
-                <ul className="list-disc pl-5 space-y-1 text-sm">
-                    <li>Live project exposure with corporate mentors</li>
-                    <li>Curriculum in Java, Spring Boot, React, DevOps</li>
-                    <li>Mock interviews & resume sessions</li>
-                    <li>Internship letter + Completion certificate</li>
-                    <li>Placement drives with startups & MNCs</li>
-                </ul>
-            </motion.div>
 
             {/* CTA Button */}
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-center mt-10"
+                className="text-center mt-10 mb-16"
             >
                 <Link
                     to="/contact"
-                    className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full text-base sm:text-lg transition-all duration-300"
+                    className="bg-orange-500 hover:bg-blue-700 text-white px-6 py-3 rounded-full text-base sm:text-lg transition-all duration-300 shadow-md"
                 >
                     🚀 Reach Us Now
                 </Link>
             </motion.div>
 
-            <style>{`
-                .flip-card {
-                    width: 100%;
-                    height: 100%;
-                    position: relative;
-                    transform-style: preserve-3d;
-                    transition: transform 0.8s;
-                }
-                .flip-card.flipped {
-                    transform: rotateY(180deg);
-                }
-                .flip-face {
-                    backface-visibility: hidden;
-                    -webkit-backface-visibility: hidden;
-                }
-            `}</style>
+            {/* CTA + Form Section */}
+            <section className="bg-blue-500 pt-16 pb-20 mb-[-20px]">
+                <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+                    {/* Left Side */}
+                    <div className="text-white text-center md:text-left">
+                        <h2 className="text-4xl font-bold mb-4">Need help getting started?</h2>
+                        <p className="text-lg">
+                            Your dreams are valid, let's make them happen together.
+                        </p>
+                    </div>
+
+                    {/* Right Side (Form) */}
+                    <div>
+                        <Form />
+                    </div>
+                </div>
+            </section>
+
+            <Footer />
         </div>
     );
 }

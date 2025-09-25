@@ -1,365 +1,317 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaChevronDown, FaChevronRight, FaBars, FaTimes } from "react-icons/fa";
+import { FaChevronDown, FaChevronRight, FaChevronUp, FaBars, FaTimes } from "react-icons/fa";
+import { useSearch } from "../context/SearchContext";
 
 export default function Navbar() {
-    const [openMainD, setOpenMainD] = useState(null);
-    const [openL1D, setOpenL1D] = useState(null);
-    const [openL2D, setOpenL2D] = useState(null);
-
-    const [drawerOpen, setDrawerOpen] = useState(false);
-    const [openMainM, setOpenMainM] = useState(null);
-    const [openL1M, setOpenL1M] = useState(null);
-    const [openL2M, setOpenL2M] = useState(null);
-
-    const navRef = useRef(null);
-    const mainHoverTimer = useRef(null);
-    const l1HoverTimer = useRef(null);
-    const l2HoverTimer = useRef(null);
-
+    const [dropdown, setDropdown] = useState(null);
+    const [expandedCategory, setExpandedCategory] = useState(null);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const navRef = useRef();
     const location = useLocation();
+    const { searchQuery, setSearchQuery } = useSearch();
 
     useEffect(() => {
-        function onDocClick(e) {
-            if (navRef.current && !navRef.current.contains(e.target)) {
-                setOpenMainD(null);
-                setOpenL1D(null);
-                setOpenL2D(null);
+        function handleClickOutside(event) {
+            if (navRef.current && !navRef.current.contains(event.target)) {
+                setDropdown(null);
+                setExpandedCategory(null);
             }
         }
-        document.addEventListener("mousedown", onDocClick);
-        return () => document.removeEventListener("mousedown", onDocClick);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    useEffect(() => {
-        setDrawerOpen(false);
-        setOpenMainM(null);
-        setOpenL1M(null);
-        setOpenL2M(null);
-        setOpenMainD(null);
-        setOpenL1D(null);
-        setOpenL2D(null);
-    }, [location]);
-
-    // Desktop hover handlers with delay
-    const handleMouseEnterMain = (i) => {
-        clearTimeout(mainHoverTimer.current);
-        setOpenMainD(i);
-    };
-    const handleMouseLeaveMain = () => {
-        mainHoverTimer.current = setTimeout(() => {
-            setOpenMainD(null);
-            setOpenL1D(null);
-            setOpenL2D(null);
-        }, 500);
-    };
-
-    const handleMouseEnterL1 = (j) => {
-        clearTimeout(l1HoverTimer.current);
-        setOpenL1D(j);
-    };
-    const handleMouseLeaveL1 = () => {
-        l1HoverTimer.current = setTimeout(() => {
-            setOpenL1D(null);
-            setOpenL2D(null);
-        }, 500);
-    };
-
-    const handleMouseEnterL2 = (k) => {
-        clearTimeout(l2HoverTimer.current);
-        setOpenL2D(k);
-    };
-    const handleMouseLeaveL2 = () => {
-        l2HoverTimer.current = setTimeout(() => {
-            setOpenL2D(null);
-        }, 500);
-    };
+    const isHomePage = location.pathname === "/";
 
     const menus = [
         {
             label: "Explore Programs",
             options: [
                 {
-                    label: "Placement Training",
+                    label: "Industrial Training",
                     subOptions: [
-                        { label: "Full Stack Developer", link: "/#courses" },
-                        {
-                            label: "Backend Development",
-                            subOptions: [
-                                { label: "Java Backend Developer", link: "/course/java-backend" },
-                                { label: "Python Developer", link: "/course/python-dev" },
-                            ],
-                        },
+
+                        { label: "Data Science", link: "/course/datascience" },
+
+                        { label: "MERN Stack", link: "/course/mern" },
+                        { label: "Java Programming", link: "/course/java" },
                     ],
                 },
+                {
+                    label: "Placement Training",
+                    subOptions: [
+                        { label: "Full Stack Developer", link: "/course/fullstack" },
+
+                    ],
+                },
+
             ],
         },
         {
             label: "Success Stories",
-            options: [{ label: "Student Placements", link: "/success-stories" }],
+            options: [
+                { label: "Student Placements", link: "/success-stories" },
+
+            ],
         },
         { label: "Contact Us", link: "/contact" },
         { label: "About Us", link: "/aboutus" },
     ];
 
-    const handleMobileLinkClick = () => {
-        setDrawerOpen(false);
-        setOpenMainM(null);
-        setOpenL1M(null);
-        setOpenL2M(null);
-    };
-
     return (
-        <nav ref={navRef} className="sticky top-0 bg-black text-white z-[50000]">
-            <div className="max-w-6xl mx-auto px-4">
-                <div className="flex items-center justify-between py-3">
-                    {/* Logo */}
-                    <Link to="/" className="flex items-center space-x-2">
-                        <img src="/Logo2.png" alt="JavaWala Logo" className="w-28 h-14 object-contain" />
-                    </Link>
-
-                    {/* Desktop Menu */}
-                    <ul className="hidden md:flex items-center space-x-8 pr-[70px]">
-                        {menus.map((menu, i) => (
-                            <li
-                                key={i}
-                                className="relative"
-                                onMouseEnter={() => handleMouseEnterMain(i)}
-                                onMouseLeave={handleMouseLeaveMain}
-                            >
-                                {menu.options ? (
-                                    <>
-                                        <button
-                                            className="flex items-center font-medium hover:text-blue-500"
-                                            onClick={(e) => e.stopPropagation()}
-                                        >
-                                            {menu.label}
-                                            <FaChevronDown className="ml-1 text-xs" />
-                                        </button>
-
-                                        {openMainD === i && (
-                                            <ul className="absolute left-0 top-full mt-2 bg-white text-black shadow-lg rounded w-64 py-2">
-                                                {menu.options.map((opt, j) => (
-                                                    <li
-                                                        key={j}
-                                                        className="relative"
-                                                        onMouseEnter={() => handleMouseEnterL1(j)}
-                                                        onMouseLeave={handleMouseLeaveL1}
-                                                    >
-                                                        {opt.subOptions ? (
-                                                            <>
-                                                                <div className="flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer">
-                                                                    {opt.label}
-                                                                    <FaChevronRight className="text-xs ml-2" />
-                                                                </div>
-
-                                                                {openL1D === j && (
-                                                                    <ul className="absolute left-full top-0 bg-white text-black shadow-lg rounded w-64 py-2">
-                                                                        {opt.subOptions.map((sub, k) => (
-                                                                            <li
-                                                                                key={k}
-                                                                                className="relative"
-                                                                                onMouseEnter={() => handleMouseEnterL2(k)}
-                                                                                onMouseLeave={handleMouseLeaveL2}
-                                                                            >
-                                                                                {sub.subOptions ? (
-                                                                                    <>
-                                                                                        <div className="flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer">
-                                                                                            {sub.label}
-                                                                                            <FaChevronDown
-                                                                                                className={`text-xs ml-2 ${openL2D === k ? "rotate-180" : ""}`}
-                                                                                            />
-                                                                                        </div>
-                                                                                        {openL2D === k && (
-                                                                                            <ul className="absolute left-full top-0 bg-white text-black shadow-lg rounded w-64 py-2">
-                                                                                                {sub.subOptions.map((leaf, z) => (
-                                                                                                    <li key={z}>
-                                                                                                        <Link
-                                                                                                            to={leaf.link}
-                                                                                                            className="block px-4 py-2 text-sm hover:bg-gray-100"
-                                                                                                        >
-                                                                                                            {leaf.label}
-                                                                                                        </Link>
-                                                                                                    </li>
-                                                                                                ))}
-                                                                                            </ul>
-                                                                                        )}
-                                                                                    </>
-                                                                                ) : (
-                                                                                    <Link
-                                                                                        to={sub.link}
-                                                                                        className="block px-4 py-2 text-sm hover:bg-gray-100"
-                                                                                    >
-                                                                                        {sub.label}
-                                                                                    </Link>
-                                                                                )}
-                                                                            </li>
-                                                                        ))}
-                                                                    </ul>
-                                                                )}
-                                                            </>
-                                                        ) : (
-                                                            <Link
-                                                                to={opt.link}
-                                                                className="block px-4 py-2 text-sm hover:bg-gray-100"
-                                                            >
-                                                                {opt.label}
-                                                            </Link>
-                                                        )}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </>
-                                ) : (
-                                    <Link to={menu.link} className="font-medium hover:text-blue-500">
-                                        {menu.label}
-                                    </Link>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-
-                    {/* Mobile Burger */}
+        <nav
+            ref={navRef}
+            className="sticky top-0 bg-white text-white px-6 pt-2 pb-0 transition-all duration-500 z-[10000]  shadow-lg "
+            style={{
+                height:
+                    isHomePage
+                        ? window.innerWidth >= 640
+                            ? "60px"
+                            : "60px"
+                        : "60px",
+                paddingBottom: isHomePage ? "0px" : "0px",
+            }}
+        >
+            {/* Top Row with Logo + Desktop Menu + Hamburger */}
+            <div className="flex items-center justify-between w-full">
+                <div className="flex items-center space-x-6">
+                    {/* Mobile Hamburger */}
                     <button
-                        className="md:hidden text-2xl"
-                        aria-label="Open menu"
-                        onClick={() => setDrawerOpen(true)}
+                        onClick={() => setIsMobileMenuOpen(true)}
+                        className="text-black md:hidden text-xl"
                     >
                         <FaBars />
                     </button>
-                </div>
-            </div>
 
-            {/* Mobile Drawer Overlay */}
-            {drawerOpen && (
-                <div className="fixed inset-0 bg-black/50 z-[9998]" onClick={() => setDrawerOpen(false)} />
-            )}
+                    {/* Logo */}
 
-            {/* Mobile Drawer */}
-            <div
-                className={`fixed top-0 left-0 h-full w-72 bg-white text-black z-[9999] transform transition-transform duration-300 ease-in-out ${drawerOpen ? "translate-x-0" : "-translate-x-full"
-                    } md:hidden`}
-            >
-                <div className="flex items-center justify-between px-4 py-3 border-b">
-                    <span className="text-lg font-semibold text-blue-600">JavaWala</span>
-                    <button className="text-2xl" aria-label="Close menu" onClick={() => setDrawerOpen(false)}>
-                        <FaTimes />
-                    </button>
+                    <Link to="/" className="flex items-center space-x-2 h-[45px]">
+                        <img
+                            src="/Logo2.png"
+                            alt="JavaWala Logo"
+                            className="w-28 h-[48px] object-contain margin-bottom-[1rem]"
+                        />
+                    </Link>
+
                 </div>
-                <div className="p-3 h-full overflow-y-auto">
-                    <ul className="space-y-1">
-                        {menus.map((menu, i) => (
-                            <li key={i} className="border-b last:border-b-0 pb-2">
-                                {menu.options ? (
-                                    <>
-                                        <button
-                                            className="w-full flex items-center justify-between py-2 font-medium"
-                                            onClick={() => {
-                                                setOpenMainM(openMainM === i ? null : i);
-                                                setOpenL1M(null);
-                                                setOpenL2M(null);
-                                            }}
-                                        >
-                                            <span>{menu.label}</span>
-                                            <FaChevronDown
-                                                className={`text-xs transition-transform ${openMainM === i ? "rotate-180" : ""
-                                                    }`}
-                                            />
-                                        </button>
-                                        {openMainM === i && (
-                                            <ul className="pl-3">
-                                                {menu.options.map((opt, j) => (
-                                                    <li key={j} className="py-1">
-                                                        {opt.subOptions ? (
+
+                {/* Center Search Box (Home page only) */}
+                {isHomePage && (
+                    <div className="hidden md:flex flex-1 justify-center px-6">
+                        <div className="w-full max-w-md relative">
+                            <input
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Search courses..."
+                                className="w-full border border-[#EF7722] rounded-full py-2 pl-4 pr-4 text-black focus:outline-none focus:ring-1 focus:ring-[#EF7722]"
+                            />
+                        </div>
+                    </div>
+                )}
+                {/* Desktop Menu (right aligned) */}
+                <div className="hidden md:flex flex-row items-center space-x-8 pr-[32px]">
+                    {menus.map((menu, idx) => (
+                        <div className="relative" key={idx}>
+                            {menu.options ? (
+                                <>
+                                    <button
+                                        onClick={() => {
+                                            // Reset expanded category when switching dropdowns
+                                            setExpandedCategory(null);
+                                            // Toggle current dropdown or set new one
+                                            setDropdown(dropdown === idx ? null : idx);
+                                        }}
+                                        className="flex items-center hover:text-[#EF7722] text-black font-medium transition-colors duration-200"
+                                    >
+                                        {menu.label}
+                                        <FaChevronDown className="ml-1 text-xs" />
+                                    </button>
+
+                                    {dropdown === idx && (
+                                        <div className="absolute top-full left-0 mt-2 bg-white border shadow-lg rounded w-80 z-[10000] transition-all duration-300 ease-in-out opacity-100 transform translate-y-0 max-h-96 overflow-y-auto">
+                                            <div className="py-2">
+                                                {menu.options.map((option, i) => (
+                                                    <div key={i} className="relative">
+                                                        {option.subOptions ? (
                                                             <>
                                                                 <button
-                                                                    className="w-full flex items-center justify-between py-2 text-sm hover:text-blue-600"
                                                                     onClick={() => {
-                                                                        setOpenL1M(openL1M === j ? null : j);
-                                                                        setOpenL2M(null);
+                                                                        // Only one category can be expanded at a time
+                                                                        setExpandedCategory(expandedCategory === i ? null : i);
                                                                     }}
+                                                                    className="flex items-center justify-between w-full px-4 py-2 text-sm font-semibold text-gray-800 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200"
                                                                 >
-                                                                    <span>{opt.label}</span>
-                                                                    <FaChevronDown
-                                                                        className={`text-xs transition-transform ${openL1M === j ? "rotate-180" : ""
-                                                                            }`}
-                                                                    />
+                                                                    <span>{option.label}</span>
+                                                                    {expandedCategory === i ? (
+                                                                        <FaChevronUp className="text-xs" />
+                                                                    ) : (
+                                                                        <FaChevronDown className="text-xs" />
+                                                                    )}
                                                                 </button>
-                                                                {openL1M === j && (
-                                                                    <ul className="pl-3">
-                                                                        {opt.subOptions.map((sub, k) => (
-                                                                            <li key={k} className="py-1">
-                                                                                {sub.subOptions ? (
-                                                                                    <>
-                                                                                        <button
-                                                                                            className="w-full flex items-center justify-between py-2 text-sm hover:text-blue-600"
-                                                                                            onClick={() =>
-                                                                                                setOpenL2M(openL2M === k ? null : k)
-                                                                                            }
-                                                                                        >
-                                                                                            <span>{sub.label}</span>
-                                                                                            <FaChevronDown
-                                                                                                className={`text-xs transition-transform ${openL2M === k ? "rotate-180" : ""
-                                                                                                    }`}
-                                                                                            />
-                                                                                        </button>
-                                                                                        {openL2M === k && (
-                                                                                            <ul className="pl-5">
-                                                                                                {sub.subOptions.map((leaf, z) => (
-                                                                                                    <li key={z}>
-                                                                                                        <Link
-                                                                                                            to={leaf.link}
-                                                                                                            className="block py-2 text-sm hover:text-blue-600"
-                                                                                                            onClick={handleMobileLinkClick}
-                                                                                                        >
-                                                                                                            {leaf.label}
-                                                                                                        </Link>
-                                                                                                    </li>
-                                                                                                ))}
-                                                                                            </ul>
-                                                                                        )}
-                                                                                    </>
-                                                                                ) : (
-                                                                                    <Link
-                                                                                        to={sub.link}
-                                                                                        className="block py-2 text-sm hover:text-blue-600"
-                                                                                        onClick={handleMobileLinkClick}
-                                                                                    >
-                                                                                        {sub.label}
-                                                                                    </Link>
-                                                                                )}
-                                                                            </li>
+                                                                {expandedCategory === i && (
+                                                                    <div className="pb-2 transition-all duration-300 ease-in-out">
+                                                                        {option.subOptions.map((sub, j) => (
+                                                                            <Link
+                                                                                key={j}
+                                                                                to={sub.link}
+                                                                                onClick={() => {
+                                                                                    // Close dropdown when sub-option is selected
+                                                                                    setDropdown(null);
+                                                                                    setExpandedCategory(null);
+                                                                                }}
+                                                                                className="block px-6 py-2 text-sm text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors duration-200"
+                                                                            >
+                                                                                {sub.label}
+                                                                            </Link>
                                                                         ))}
-                                                                    </ul>
+                                                                    </div>
                                                                 )}
                                                             </>
                                                         ) : (
                                                             <Link
-                                                                to={opt.link}
-                                                                className="block py-2 text-sm hover:text-blue-600"
-                                                                onClick={handleMobileLinkClick}
+                                                                to={option.link}
+                                                                onClick={() => {
+                                                                    // Close dropdown when option is selected
+                                                                    setDropdown(null);
+                                                                    setExpandedCategory(null);
+                                                                }}
+                                                                className="block px-4 py-2 text-sm text-black hover:text-[#EF7722] hover:bg-gray-100 transition-colors duration-200"
                                                             >
-                                                                {opt.label}
+                                                                {option.label}
                                                             </Link>
                                                         )}
-                                                    </li>
+                                                    </div>
                                                 ))}
-                                            </ul>
-                                        )}
-                                    </>
-                                ) : (
-                                    <Link
-                                        to={menu.link}
-                                        className="block py-2 font-medium hover:text-blue-600"
-                                        onClick={handleMobileLinkClick}
+                                            </div>
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                <Link
+                                    to={menu.link}
+                                    className="hover:text-[#EF7722] text-black font-medium"
+                                >
+                                    {menu.label}
+                                </Link>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Overlay */}
+            {isMobileMenuOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-[9998]"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                />
+            )}
+
+            {/* Mobile Sidebar */}
+            <div
+                className={`fixed top-0 left-0 h-full w-64 bg-white text-black z-[9999] transform transition-all duration-500 ease-in-out ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+                    } md:hidden`}
+            >
+                <div className="flex items-center justify-between px-4 py-3 border-b">
+                    <h2 className="text-lg font-semibold text-blue-600">JavaWala</h2>
+                    <button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-xl text-gray-800"
+                    >
+                        <FaTimes />
+                    </button>
+                </div>
+
+                <div className="flex flex-col p-4 space-y-2">
+                    {menus.map((menu, idx) => (
+                        <div key={idx}>
+                            {menu.options ? (
+                                <>
+                                    <button
+                                        onClick={() => {
+                                            // Reset expanded category when switching dropdowns
+                                            setExpandedCategory(null);
+                                            // Toggle current dropdown or set new one
+                                            setDropdown(dropdown === idx ? null : idx);
+                                        }}
+                                        className="flex items-center justify-between w-full text-left text-black font-medium py-2 transition-colors duration-200"
                                     >
                                         {menu.label}
-                                    </Link>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
+                                        <FaChevronDown className="ml-1 text-xs" />
+                                    </button>
+
+                                    {dropdown === idx && (
+                                        <div className="ml-4 space-y-1 transition-all duration-300 ease-in-out opacity-100 transform translate-x-0 max-h-80 overflow-y-auto">
+                                            {menu.options.map((option, i) => (
+                                                <div key={i}>
+                                                    {option.subOptions ? (
+                                                        <>
+                                                            <button
+                                                                onClick={() => {
+                                                                    // Only one category can be expanded at a time
+                                                                    setExpandedCategory(expandedCategory === i ? null : i);
+                                                                }}
+                                                                className="flex items-center justify-between w-full text-left text-sm font-semibold text-gray-800 py-1 border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200"
+                                                            >
+                                                                <span>{option.label}</span>
+                                                                {expandedCategory === i ? (
+                                                                    <FaChevronUp className="text-xs" />
+                                                                ) : (
+                                                                    <FaChevronDown className="text-xs" />
+                                                                )}
+                                                            </button>
+                                                            {expandedCategory === i && (
+                                                                <div className="ml-2 space-y-1 pb-2 transition-all duration-300 ease-in-out">
+                                                                    {option.subOptions.map((sub, j) => (
+                                                                        <Link
+                                                                            key={j}
+                                                                            to={sub.link}
+                                                                            className="block text-sm text-gray-600 hover:text-blue-600 py-1 transition-colors duration-200"
+                                                                            onClick={() => {
+                                                                                // Close mobile menu and reset state when sub-option is selected
+                                                                                setIsMobileMenuOpen(false);
+                                                                                setDropdown(null);
+                                                                                setExpandedCategory(null);
+                                                                            }}
+                                                                        >
+                                                                            {sub.label}
+                                                                        </Link>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </>
+                                                    ) : (
+                                                        <Link
+                                                            to={option.link}
+                                                            className="block text-sm text-gray-700 hover:text-blue-600 py-1 transition-colors duration-200"
+                                                            onClick={() => {
+                                                                // Close mobile menu and reset state when option is selected
+                                                                setIsMobileMenuOpen(false);
+                                                                setDropdown(null);
+                                                                setExpandedCategory(null);
+                                                            }}
+                                                        >
+                                                            {option.label}
+                                                        </Link>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                <Link
+                                    to={menu.link}
+                                    className="block text-black py-2 font-medium hover:text-blue-600"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    {menu.label}
+                                </Link>
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
         </nav>

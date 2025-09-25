@@ -10,18 +10,20 @@
         linear-gradient(to right, rgb(241, 241, 241) 1px, transparent 1px),
         linear-gradient(to bottom, rgb(241, 241, 241) 1px, transparent 1px);
     background-size: 20px 20px;
- 
+
 
     /* size of each box */
 }
-body{
-   background-color: black;
+
+body {
+    background-color: white;
     width: 100%;
-        overflow-x: hidden;
-        /* Prevent horizontal scrolling */
-        margin: 0;
-        padding: 0;
+    overflow-x: hidden;
+    /* Prevent horizontal scrolling */
+    margin: 0;
+    padding: 0;
 }
+
 .flip-container {
     perspective: 1000px;
 }

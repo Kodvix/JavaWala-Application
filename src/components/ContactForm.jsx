@@ -5,8 +5,9 @@ export default function ContactForm() {
         firstName: "",
         lastName: "",
         phone: "",
+
         email: "",
-        course: "",
+
         message: "",
     });
 
@@ -18,8 +19,9 @@ export default function ContactForm() {
         firstName: useRef(),
         lastName: useRef(),
         phone: useRef(),
+
         email: useRef(),
-        course: useRef(),
+
         message: useRef(),
     };
 
@@ -82,7 +84,7 @@ export default function ContactForm() {
         formPayload.append("message", formData.message);
 
         try {
-            const response = await fetch("https://formspree.io/f/mwpqjrdp", {
+            const response = await fetch("https://formspree.io/f/xkgzpkgy", {
                 method: "POST",
                 body: formPayload,
                 headers: {
@@ -96,8 +98,9 @@ export default function ContactForm() {
                     firstName: "",
                     lastName: "",
                     phone: "",
+
                     email: "",
-                    course: "",
+
                     message: "",
                 });
             } else {
@@ -111,11 +114,11 @@ export default function ContactForm() {
     return (
         <form
             onSubmit={handleSubmit}
-            className="max-w-2xl mx-auto bg-white rounded-lg p-6 shadow-lg"
+            className="max-w-2xl mx-auto  p-6 "
         >
             <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Contact Us</h2>
 
-           
+
             <div className="flex flex-col sm:flex-row gap-4 mb-4">
                 <div className="w-full">
                     <label className="block mb-1 text-gray-700">First Name</label>
@@ -146,7 +149,7 @@ export default function ContactForm() {
                 </div>
             </div>
 
-           
+
             <div className="mb-4">
                 <label className="block mb-1 text-gray-700">Phone Number</label>
                 <input
@@ -162,7 +165,7 @@ export default function ContactForm() {
                 {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
             </div>
 
-           
+
             <div className="mb-4">
                 <label className="block mb-1 text-gray-700">Email</label>
                 <input
@@ -177,7 +180,7 @@ export default function ContactForm() {
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
 
-            
+
             <div className="mb-4">
                 <label className="block mb-1 text-gray-700">Select Course</label>
                 <select
@@ -198,7 +201,7 @@ export default function ContactForm() {
                 {errors.course && <p className="text-red-500 text-sm mt-1">{errors.course}</p>}
             </div>
 
-           
+
             <div className="mb-4">
                 <label className="block mb-1 text-gray-700">Message</label>
                 <textarea
@@ -212,18 +215,18 @@ export default function ContactForm() {
                 {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
             </div>
 
-            
+
             <div className="flex justify-center">
                 <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="w-1/2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200"
+                    className="w-1/2 bg-orange-500 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-md transition duration-200"
                 >
                     {status === "submitting" ? "Sending..." : "Send Message"}
                 </button>
             </div>
 
-            
+
             {status === "success" && (
                 <p className="mt-4 text-green-600 text-center">✅ Message sent successfully!</p>
             )}
