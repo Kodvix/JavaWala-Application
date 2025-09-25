@@ -5,7 +5,8 @@ import { FaRocket, FaUserTie, FaHandshake } from "react-icons/fa";
 import { FaUsers, FaClipboardCheck, FaTrophy, FaIndustry, FaUserGraduate, FaProjectDiagram, FaGraduationCap, FaChalkboardTeacher, FaLaptopCode } from "react-icons/fa";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import hero from '../assets/hero.png';
+import hero from '../assets/Hero.png'; 
+//thiss code is testing
 import aastro from '../assets/astro-Photoroom.png';
 import aastro1 from '../assets/aastro-Photoroom1.png';
 import { SiImessage } from "react-icons/si";
