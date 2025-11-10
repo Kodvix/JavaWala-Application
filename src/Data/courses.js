@@ -3,14 +3,14 @@ import mern from "../assets/mern.png";
 import mern2 from "../assets/mernnew.jpeg";
 import datascienceimg from "../assets/datascienceimg.png";
 import datascienceimg2 from "../assets/python.jpeg";
-import fullstack from "../assets/Fullstack.png";
+import fullstack from "../assets/fullstack.png";
 import fullstack2 from "../assets/react+java.jpeg";
 import java from "../assets/jaaavaa.png";
 import java2 from "../assets/java.jpeg";
 
 export const courses = [
     {
-        
+
         id: "mern",
         title: "MERN Stack Development",
         duration: "6 Months",
