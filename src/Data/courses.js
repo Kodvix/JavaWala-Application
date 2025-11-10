@@ -3,7 +3,7 @@ import mern2 from "../assets/mernnew.jpeg";
 import datascienceimg from "../assets/datascienceimg.png";
 import datascienceimg2 from "../assets/python.jpeg";
 import fullstack from "../assets/fullstack.png";
-import fullstack2 from "../assets/react+java.jpeg";
+import fullstack2 from "../assets/fullstack2.jpeg";
 import java from "../assets/jaaavaa.png";
 import java2 from "../assets/java.jpeg";
 
