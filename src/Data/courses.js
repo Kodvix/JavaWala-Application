@@ -1,4 +1,3 @@
-import React from "react";
 import mern from "../assets/mern.png";
 import mern2 from "../assets/mernnew.jpeg";
 import datascienceimg from "../assets/datascienceimg.png";
